@@ -38,7 +38,7 @@ Browser tests use installed Chrome by default, or `QA_BROWSER=msedge`. They expe
 - `src/app/responsive.css`: fluid presentation for large and ultrawide screens. Shared containers use the available viewport width; spacing, typography and graphics scale above 1440px. Mobile/tablet breakpoints still reflow the navigation and grids, with fluid, two-column article sections that stack on mobile.
 - `src/app/typography.css`: readable type scale loaded after the clay theme. Ordinary copy is 18px desktop / 17px mobile at the default browser root size; navigation and controls use 16px, substantive supporting labels use 14px or larger, and reading weight is 450. The menu collapses at 1100px rather than shrinking its text; narrow content stacks for comfortable reading.
 
-The current contact details supplied by KINT are `admin@kintconsult.com` and `0740470116`. Public environment settings can override them. Addresses, leadership, social URLs, clients, case studies and vacancies remain unpopulated until confirmed. The email domain is independent of the website domain specified in the original brief (`kintconsults.com`). The geographic copy describes strategic focus; it does not assert a registered office or delivered client work. Shared header/footer branding uses the supplied logo retained in `public/images/kint-logo.jpg`. Browser and Apple touch icons render the actual gold symbol from that source image, preserving its appearance and cropping away the small wordmark for legibility.
+The current contact details supplied by KINT are `admin@kintconsult.com` and `0740470116`. Public environment settings can override them. Addresses, leadership, social URLs, clients, case studies and vacancies remain unpopulated until confirmed. The website and contact email use `kintconsult.com`. The geographic copy describes strategic focus; it does not assert a registered office or delivered client work. Shared header/footer branding uses the supplied logo retained in `public/images/kint-logo.jpg`. Browser and Apple touch icons render the actual gold symbol from that source image, preserving its appearance and cropping away the small wordmark for legibility.
 
 Current services and developing intelligence products are explicitly distinguished. No authenticated application, live intelligence dataset or subscription is implied. A future platform URL is reserved in company config but is not linked before a real destination exists. Projects, careers and leadership routes should be added when approved content is available.
 
@@ -52,15 +52,11 @@ Public environment variables are compiled into the browser bundle; set them befo
 
 ## Linux / Hetzner deployment
 
-Follow [the hosting guide](deploy/HOSTING.md). The Docker Compose configuration builds the standalone application, binds it to localhost, restarts it automatically and checks its health. Nginx provides HTTPS, canonical redirects and enquiry rate limits.
+Follow [the Nginx hosting guide](deploy/HOSTING.md). Use your existing Nginx installation to proxy HTTPS requests to the standalone Node application on `127.0.0.1:3000`. The supplied `deploy/kint-consult.service` runs it under systemd with automatic restart and boot startup.
 
-```sh
-cp .env.example .env.production
-chmod 600 .env.production
-docker compose --env-file .env.production -f deploy/compose.yaml up -d --build
-```
+Upload the source to the server, configure `.env.production`, then run `npm ci` and `npm run build` there. Install the service unit, adapt the domain's Nginx configuration, validate with `nginx -t` and reload Nginx. Docker Compose is available as an alternative application runner.
 
-Set the final public URL before building. Configure the domain, DNS and issued TLS certificates on the host. The website can run with email/telephone contact and local draft enquiries; live form delivery needs the webhook and Turnstile settings described above.
+Set the final public URL before building. The website can run with email/telephone contact and local draft enquiries; live form delivery needs the webhook and Turnstile settings described above.
 
 ## Public launch review
 

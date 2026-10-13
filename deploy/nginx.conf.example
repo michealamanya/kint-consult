@@ -3,25 +3,25 @@ limit_req_zone $binary_remote_addr zone=kint_enquiries:10m rate=5r/m;
 
 server {
     listen 80;
-    server_name kintconsults.com www.kintconsults.com;
-    return 301 https://kintconsults.com$request_uri;
+    server_name kintconsult.com www.kintconsult.com;
+    return 301 https://kintconsult.com$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name www.kintconsults.com;
-    ssl_certificate /etc/letsencrypt/live/kintconsults.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/kintconsults.com/privkey.pem;
+    server_name www.kintconsult.com;
+    ssl_certificate /etc/letsencrypt/live/kintconsult.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/kintconsult.com/privkey.pem;
     ssl_protocols TLSv1.2 TLSv1.3;
-    return 301 https://kintconsults.com$request_uri;
+    return 301 https://kintconsult.com$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name kintconsults.com;
-    # Certificate must cover both kintconsults.com and www.kintconsults.com.
-    ssl_certificate /etc/letsencrypt/live/kintconsults.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/kintconsults.com/privkey.pem;
+    server_name kintconsult.com;
+    # Certificate must cover both kintconsult.com and www.kintconsult.com.
+    ssl_certificate /etc/letsencrypt/live/kintconsult.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/kintconsult.com/privkey.pem;
     ssl_protocols TLSv1.2 TLSv1.3;
     add_header Strict-Transport-Security "max-age=31536000" always;
     client_max_body_size 24k;

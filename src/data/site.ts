@@ -1,7 +1,7 @@
 export const company = {
   name: "KINT Consult Limited",
   shortName: "KINT",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://kintconsults.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://kintconsult.com",
   description:
     "Enterprise technology, data solutions and developing industrial intelligence capabilities for Uganda and the wider African industrial economy.",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "admin@kintconsult.com",

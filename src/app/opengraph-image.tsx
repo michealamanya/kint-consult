@@ -46,7 +46,7 @@ export default function OpenGraphImage() {
         }}
       >
         <span>KINT CONSULT LIMITED</span>
-        <span>kintconsults.com</span>
+        <span>kintconsult.com</span>
       </div>
     </div>,
     size,

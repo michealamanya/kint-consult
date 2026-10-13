@@ -1,0 +1,27 @@
+[Unit]
+Description=KINT Consult website
+After=network.target
+
+[Service]
+Type=simple
+User=kint
+Group=kint
+WorkingDirectory=/var/www/kintconsult
+EnvironmentFile=/var/www/kintconsult/.env.production
+Environment=NODE_ENV=production
+Environment=HOSTNAME=127.0.0.1
+Environment=PORT=3000
+Environment=NEXT_TELEMETRY_DISABLED=1
+ExecStart=/usr/bin/node /var/www/kintconsult/scripts/start.mjs
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

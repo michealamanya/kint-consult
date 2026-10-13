@@ -181,7 +181,7 @@ test("all published routes resolve and unknown topics return 404", async ({
 test("contact API rejects bad origins and malformed input", async ({
   request,
 }) => {
-  const allowedOrigin = "https://kintconsults.com";
+  const allowedOrigin = "https://kintconsult.com";
   const value = {
     name: "Alex Example",
     email: "alex@example.com",
