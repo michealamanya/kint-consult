@@ -6,4 +6,8 @@ node_modules
 .qa
 docs
 tests
+output
+README.md
+playwright.config.ts
+deploy
 *.tsbuildinfo

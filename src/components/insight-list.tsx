@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { insights } from "@/data/insights";
 import { Arrow } from "./ui";
+import { BrandVisual } from "./brand-visual";
 
 export function InsightList() {
   return (
@@ -11,36 +12,10 @@ export function InsightList() {
           className="insight-item"
           key={item.slug}
         >
-          <div
-            className={`insight-art insight-art-${item.image}`}
-            aria-hidden="true"
-          >
-            {index === 0 ? (
-              <>
-                <span>DATA</span>
-                <i />
-                <span>CONTEXT</span>
-                <i />
-                <span>INTELLIGENCE</span>
-              </>
-            ) : index === 1 ? (
-              <div className="art-process">
-                <span>01</span>
-                <i />
-                <span>02</span>
-                <i />
-                <span>03</span>
-              </div>
-            ) : (
-              <div className="art-chart">
-                <i />
-                <i />
-                <i />
-                <i />
-                <i />
-                <i />
-              </div>
-            )}
+          <div className="insight-art" aria-hidden="true">
+            <BrandVisual
+              kind={index === 0 ? "ai" : index === 1 ? "erp" : "reporting"}
+            />
             <span className="art-caption">KINT / PERSPECTIVES</span>
           </div>
           <div className="insight-meta">

@@ -1,0 +1,206 @@
+/* More visual storytelling, with the existing gold clay palette and type scale. */
+.brand-visual {
+  width: 100%;
+  color: var(--brand-ink);
+  background: linear-gradient(135deg, #fffaf0, #edddb8);
+  border: 1px solid #ffffff80;
+  border-radius: 20px;
+  box-shadow: var(--shadow-inset);
+  overflow: hidden;
+}
+.brand-visual :is(img, svg) {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  padding: 0;
+}
+.brand-photo img {
+  object-fit: cover;
+}
+.brand-visual svg {
+  padding: 28px;
+}
+.connection-nodes .brand-visual svg {
+  padding: 16px;
+}
+.positioning-grid {
+  align-items: center;
+}
+.positioning-summary {
+  margin: 24px 0;
+  color: var(--muted);
+}
+.connection-visual {
+  padding: 28px;
+  border-radius: 28px;
+  background: var(--surface-tinted);
+  border: 1px solid #ffffff80;
+  box-shadow: var(--shadow-surface);
+}
+.connection-core {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 36px;
+  padding: 18px 28px;
+  background: var(--deep);
+  border-radius: 20px;
+  color: var(--gold-on-dark);
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  box-shadow: var(--shadow-dark);
+}
+.connection-core span {
+  display: block;
+  font-size: 14px;
+  font-weight: 450;
+  letter-spacing: 0;
+  color: var(--ivory);
+}
+.connection-core::after {
+  content: "";
+  position: absolute;
+  height: 24px;
+  width: 2px;
+  background: #a5833e;
+  top: 100%;
+  left: 50%;
+}
+.connection-nodes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  position: relative;
+}
+.connection-nodes::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 16.66%;
+  right: 16.66%;
+  border-top: 2px solid #a5833e;
+}
+.connection-nodes > div {
+  position: relative;
+  text-align: center;
+}
+.connection-nodes > div::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  height: 12px;
+  border-left: 2px solid #a5833e;
+}
+.connection-nodes .brand-visual :is(img, svg) {
+  height: 85px;
+  padding: 0;
+}
+.connection-nodes > div > span {
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.sector-item .brand-visual {
+  margin-top: 22px;
+}
+.topic-link .brand-visual {
+  margin-top: 20px;
+}
+.topic-link .brand-visual :is(img, svg) {
+  height: 180px;
+}
+.insight-art {
+  padding: 0;
+}
+.insight-art .brand-visual {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.insight-art .brand-visual :is(img, svg) {
+  height: 100%;
+}
+.sector-item h3 {
+  margin-top: 20px;
+}
+.sector-item p {
+  margin-top: 8px;
+}
+.capability-grid .brand-visual {
+  margin-top: 22px;
+}
+.capability-grid article:first-child .brand-visual {
+  background: var(--surface-raised);
+  border-color: #ffffff20;
+  color: var(--brand-ink);
+  box-shadow: inset 3px 3px 8px #201b1240;
+}
+.capability-grid h3 {
+  margin-top: 24px;
+}
+.capability-grid p {
+  margin-bottom: 24px;
+}
+.solution-row {
+  min-height: 88px;
+}
+.hero-image {
+  height: 480px;
+}
+.hero-image img {
+  object-fit: cover;
+}
+.hero-image {
+  background: #29251f;
+}
+.hero-image .image-shade {
+  background: linear-gradient(
+    180deg,
+    #211b121a 0%,
+    transparent 55%,
+    #211b12d9 100%
+  );
+}
+@media (max-width: 1100px) {
+  .hero-image {
+    height: 400px;
+  }
+  .positioning-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .sector-item .brand-visual :is(img, svg) {
+    height: 150px;
+  }
+}
+@media (max-width: 760px) {
+  .hero-image {
+    height: 300px;
+  }
+  .connection-visual {
+    padding: 24px 14px;
+  }
+  .connection-nodes {
+    gap: 8px;
+  }
+  .connection-nodes .brand-visual {
+    border-radius: 14px;
+  }
+  .connection-nodes .brand-visual :is(img, svg) {
+    height: 65px;
+  }
+  .connection-nodes > div > span {
+    font-size: 14px;
+  }
+  .sector-item .brand-visual {
+    margin-top: 14px;
+  }
+  .sector-item .brand-visual :is(img, svg) {
+    height: 180px;
+  }
+}

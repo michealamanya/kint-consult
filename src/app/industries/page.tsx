@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { industries } from "@/data/site";
+import { BrandVisual, type VisualKind } from "@/components/brand-visual";
 import {
   Arrow,
   ContactCta,
@@ -29,6 +30,7 @@ export default function IndustriesPage() {
               key={item.slug}
             >
               <span>{item.label}</span>
+              <BrandVisual kind={item.slug as VisualKind} />
               <h2>{item.title}</h2>
               <p>{item.description}</p>
               <Arrow diagonal />

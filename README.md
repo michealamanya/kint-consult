@@ -32,9 +32,13 @@ Browser tests use installed Chrome by default, or `QA_BROWSER=msedge`. They expe
 - `src/data/insights.ts`: original explanatory perspectives; approve editorial copy before publication.
 - `src/components`: shared layout, homepage sections, diagram and form.
 - `src/app`: core pages, generated topic routes, SEO and server contact endpoint.
-- `src/app/globals.css`: colour, typography, spacing and responsive design system with Tailwind utilities.
+- `src/app/globals.css`: shared typography, spacing, responsive layouts and Tailwind utilities.
+- `src/app/clay.css`: the site-wide claymorphism theme, loaded after the foundation. Logo-led gold, warm ivory and charcoal surfaces, inset and raised shadows, sculpted navigation, panels and controls apply across the core and detail pages. Reduced-motion settings also remove hover movement.
+- `src/components/brand-visual.tsx` and `src/app/visuals.css`: user-supplied sector photos and lightweight SVG service icons, shared across the homepage and listing pages. Sector WebPs and dimensions are in `public/images/sectors/` and `src/data/sector-images.ts`. No AI-generated image assets remain.
+- `src/app/responsive.css`: fluid presentation for large and ultrawide screens. Shared containers use the available viewport width; spacing, typography and graphics scale above 1440px. Mobile/tablet breakpoints still reflow the navigation and grids, with fluid, two-column article sections that stack on mobile.
+- `src/app/typography.css`: readable type scale loaded after the clay theme. Ordinary copy is 18px desktop / 17px mobile at the default browser root size; navigation and controls use 16px, substantive supporting labels use 14px or larger, and reading weight is 450. The menu collapses at 1100px rather than shrinking its text; narrow content stacks for comfortable reading.
 
-The current contact details supplied by KINT are `admin@kintconsult.com` and `0740470116`. Public environment settings can override them. Addresses, leadership, social URLs, clients, case studies and vacancies remain unpopulated until confirmed. The email domain is independent of the website domain specified in the original brief (`kintconsults.com`). The geographic copy describes strategic focus; it does not assert a registered office or delivered client work. Shared header/footer branding uses the supplied `icon.jpg`, copied unchanged into `public/images/kint-logo.jpg`. Browser and Apple touch icons render the actual gold symbol from that source image, preserving its appearance and cropping away the small wordmark for legibility.
+The current contact details supplied by KINT are `admin@kintconsult.com` and `0740470116`. Public environment settings can override them. Addresses, leadership, social URLs, clients, case studies and vacancies remain unpopulated until confirmed. The email domain is independent of the website domain specified in the original brief (`kintconsults.com`). The geographic copy describes strategic focus; it does not assert a registered office or delivered client work. Shared header/footer branding uses the supplied logo retained in `public/images/kint-logo.jpg`. Browser and Apple touch icons render the actual gold symbol from that source image, preserving its appearance and cropping away the small wordmark for legibility.
 
 Current services and developing intelligence products are explicitly distinguished. No authenticated application, live intelligence dataset or subscription is implied. A future platform URL is reserved in company config but is not linked before a real destination exists. Projects, careers and leadership routes should be added when approved content is available.
 
@@ -48,15 +52,15 @@ Public environment variables are compiled into the browser bundle; set them befo
 
 ## Linux / Hetzner deployment
 
-The application produces Next.js standalone output. Serve it behind an HTTPS reverse proxy. A Dockerfile and Nginx example are included; adapt domain, certificates and operational controls to your server.
+Follow [the hosting guide](deploy/HOSTING.md). The Docker Compose configuration builds the standalone application, binds it to localhost, restarts it automatically and checks its health. Nginx provides HTTPS, canonical redirects and enquiry rate limits.
 
 ```sh
-docker build -t kint-consult .
-docker run -d --name kint-consult --restart unless-stopped \
-  -p 127.0.0.1:3000:3000 --env-file .env.production kint-consult
+cp .env.example .env.production
+chmod 600 .env.production
+docker compose --env-file .env.production -f deploy/compose.yaml up -d --build
 ```
 
-Supply verified public settings as Docker build arguments. Supply only server settings at runtime; keep secret env files on the deployment host, outside the repository. Alternatively, copy `.next/standalone`, `.next/static` and `public` to the server and run `node server.js` under a process manager.
+Set the final public URL before building. Configure the domain, DNS and issued TLS certificates on the host. The website can run with email/telephone contact and local draft enquiries; live form delivery needs the webhook and Turnstile settings described above.
 
 ## Public launch review
 

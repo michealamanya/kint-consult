@@ -63,9 +63,11 @@ export default async function InsightPage({
               {item.sections.map((section) => (
                 <section key={section.heading}>
                   <h2>{section.heading}</h2>
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
+                  <div className="article-section-copy">
+                    {section.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
                 </section>
               ))}
               <div className="article-note">

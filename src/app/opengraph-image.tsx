@@ -12,8 +12,8 @@ export default function OpenGraphImage() {
         justifyContent: "space-between",
         width: "100%",
         height: "100%",
-        background: "#123b30",
-        color: "#f5f2ea",
+        background: "#29251f",
+        color: "#f6f2e9",
         padding: "65px 75px",
         fontFamily: "sans-serif",
       }}
@@ -26,13 +26,13 @@ export default function OpenGraphImage() {
           letterSpacing: "-3px",
         }}
       >
-        KINT<span style={{ color: "#bfa17a" }}>.</span>
+        KINT<span style={{ color: "#e5b84e" }}>.</span>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         <div style={{ display: "flex", fontSize: 68, letterSpacing: "-3px" }}>
           Industry. Technology. Intelligence.
         </div>
-        <div style={{ display: "flex", fontSize: 24, color: "#c2d1c3" }}>
+        <div style={{ display: "flex", fontSize: 24, color: "#ddd1b9" }}>
           Industrial intelligence. Digital transformation.
         </div>
       </div>
@@ -41,7 +41,7 @@ export default function OpenGraphImage() {
           display: "flex",
           justifyContent: "space-between",
           fontSize: 17,
-          borderTop: "1px solid #608272",
+          borderTop: "1px solid #a5833e",
           paddingTop: 25,
         }}
       >

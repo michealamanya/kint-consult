@@ -4,6 +4,7 @@ import { industries, solutions, intelligenceAreas } from "@/data/site";
 import { Arrow, Button, Container, Eyebrow } from "./ui";
 import { DataFlow } from "./data-flow";
 import { InsightList } from "./insight-list";
+import { BrandVisual, ConnectionVisual } from "./brand-visual";
 
 export function Hero() {
   return (
@@ -16,10 +17,7 @@ export function Hero() {
               <span>Industrial intelligence.</span>
               <em>Digital transformation.</em>
             </h1>
-            <p>
-              We design enterprise systems, software and data solutions that
-              improve how industrial businesses operate and make decisions.
-            </p>
+            <p>Connected systems. Clearer data. Better industrial decisions.</p>
             <div className="hero-actions">
               <Button href="#what-we-do">Explore KINT</Button>
               <Link href="/contact" className="text-link">
@@ -27,6 +25,14 @@ export function Hero() {
                 <Arrow diagonal />
               </Link>
             </div>
+            <nav
+              className="hero-specialisms"
+              aria-label="Explore current solutions"
+            >
+              <Link href="/solutions/erp-odoo">ERP Systems</Link>
+              <Link href="/solutions/ai-data">AI & data</Link>
+              <Link href="/solutions/cloud-infrastructure">Cloud systems</Link>
+            </nav>
             <div className="hero-footnote">
               <span className="small-cross" aria-hidden="true">
                 +
@@ -75,29 +81,23 @@ export function Positioning() {
   return (
     <section className="positioning">
       <Container>
-        <Eyebrow>Our perspective / Uganda & the wider African economy</Eyebrow>
         <div className="positioning-grid">
-          <h2>
-            Where industry meets
-            <br />
-            <em>digital capability.</em>
-          </h2>
           <div>
-            <p>
-              Better operations start with dependable systems. Better decisions
-              start with information you can use.
-            </p>
-            <p>
-              KINT connects these foundations through enterprise technology,
-              data and an industrial focus. We implement practical business
-              systems today, while developing a longer-term approach to company,
-              supplier, project and market intelligence.
+            <Eyebrow>Uganda & the wider African economy</Eyebrow>
+            <h2>
+              Industry meets
+              <br />
+              <em>digital capability.</em>
+            </h2>
+            <p className="positioning-summary">
+              We bring your systems and information together.
             </p>
             <Link href="/about" className="text-link">
               Meet KINT
               <Arrow diagonal />
             </Link>
           </div>
+          <ConnectionVisual />
         </div>
       </Container>
     </section>
@@ -130,17 +130,34 @@ export function IndustriesSection() {
               key={item.slug}
             >
               <span className="sector-number">0{index + 1}</span>
+              <BrandVisual
+                kind={
+                  item.slug as
+                    | "petroleum"
+                    | "energy"
+                    | "minerals-mining"
+                    | "petrochemicals"
+                }
+              />
               <div>
                 <h3>{item.shortTitle || item.title}</h3>
-                <p>{item.description}</p>
+                <p>
+                  {
+                    [
+                      "Operations & supply chains",
+                      "Assets & infrastructure",
+                      "Resources & logistics",
+                      "Processes & materials",
+                    ][index]
+                  }
+                </p>
               </div>
               <Arrow diagonal />
             </Link>
           ))}
         </div>
         <p className="section-note">
-          Petroleum is our initial strategic focus, with energy, minerals and
-          petrochemicals forming our wider direction.
+          Starting with petroleum. Expanding into connected sectors.
         </p>
       </Container>
     </section>
@@ -159,11 +176,7 @@ export function SolutionsSection() {
               <br />
               <em>better operations.</em>
             </h2>
-            <p>
-              Practical technology, designed around your business. From
-              connected enterprise systems to the infrastructure and data that
-              support them.
-            </p>
+            <p>Technology that fits the way you work.</p>
             <Button href="/solutions" variant="secondary">
               Explore our solutions
             </Button>
@@ -188,7 +201,6 @@ export function SolutionsSection() {
                   <span>{item.label}</span>
                   <div>
                     <h3>{item.title}</h3>
-                    <p>{item.description}</p>
                   </div>
                   <Arrow diagonal />
                 </Link>
@@ -228,9 +240,7 @@ export function IntelligenceSection() {
           </div>
           <div className="intelligence-detail">
             <p>
-              We are developing a foundation for structured industrial data,
-              AI-assisted research and decision support—starting with petroleum
-              and expanding into related sectors.
+              Structured industry data. AI-assisted research. Human judgement.
             </p>
             <div className="intelligence-topics">
               {intelligenceAreas.map((area) => (
@@ -241,8 +251,7 @@ export function IntelligenceSection() {
               ))}
             </div>
             <p className="development-note">
-              A long-term product direction. These intelligence products are
-              under development and are not yet commercially available.
+              In development. Not yet commercially available.
             </p>
           </div>
         </div>
@@ -261,15 +270,12 @@ export function DataSection() {
             <h2>From data to decisions.</h2>
           </div>
           <p className="heading-description">
-            Good intelligence is built in layers.
-            <br />
-            Each one makes the next more useful.
+            A clear path from source to action.
           </p>
         </div>
         <DataFlow />
         <p className="section-note">
-          A framework for our development direction, with traceable sources and
-          human judgement at every stage.
+          Our development framework. Traceable sources. Human judgement.
         </p>
       </Container>
     </section>
@@ -289,20 +295,14 @@ export function CapabilitySection() {
               Build a clearer view.
             </h2>
           </div>
-          <p className="heading-description">
-            Practical engagement areas, shaped around your organisation’s
-            processes.
-          </p>
+          <p className="heading-description">Built around your team.</p>
         </div>
         <div className="capability-grid">
           <article>
             <span className="index-label">01 / CONNECT</span>
-            <h3>ERP that follows your process.</h3>
-            <p>
-              Map finance, procurement and inventory workflows before
-              configuring Odoo. Define the data, approvals and reporting each
-              team needs.
-            </p>
+            <BrandVisual kind="erp" />
+            <h3>One connected business.</h3>
+            <p>Finance, procurement and inventory in sync.</p>
             <Link href="/solutions/erp-odoo" className="text-link">
               ERP & Odoo
               <Arrow diagonal />
@@ -310,11 +310,9 @@ export function CapabilitySection() {
           </article>
           <article>
             <span className="index-label">02 / SEE</span>
-            <h3>Reporting that supports action.</h3>
-            <p>
-              Connect reliable data sources, agree on useful measures and make
-              exceptions visible to the people responsible for acting on them.
-            </p>
+            <BrandVisual kind="reporting" />
+            <h3>See what matters.</h3>
+            <p>Clear dashboards. Less manual reporting.</p>
             <Link href="/solutions/automation-reporting" className="text-link">
               Automation & reporting
               <Arrow diagonal />
@@ -322,11 +320,9 @@ export function CapabilitySection() {
           </article>
           <article>
             <span className="index-label">03 / BUILD</span>
-            <h3>Infrastructure teams can rely on.</h3>
-            <p>
-              Bring cloud systems and Microsoft 365 together with clear access
-              controls, backup requirements and documented responsibilities.
-            </p>
+            <BrandVisual kind="cloud" />
+            <h3>A dependable foundation.</h3>
+            <p>Cloud, Microsoft 365 and secure access.</p>
             <Link href="/solutions/cloud-infrastructure" className="text-link">
               Cloud & infrastructure
               <Arrow diagonal />

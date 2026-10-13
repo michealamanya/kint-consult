@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { solutions } from "@/data/site";
+import { BrandVisual, type VisualKind } from "@/components/brand-visual";
 import {
   Arrow,
   ContactCta,
@@ -11,6 +12,14 @@ import {
 import { pageMetadata, pageSchema } from "@/lib/seo";
 const description =
   "ERP and Odoo, AI and data, custom software, cloud infrastructure, automation and information governance for business and industrial organisations.";
+const serviceVisuals: Record<string, VisualKind> = {
+  "ai-data": "ai",
+  "erp-odoo": "erp",
+  "software-platforms": "software",
+  "cloud-infrastructure": "cloud",
+  "automation-reporting": "reporting",
+  "cybersecurity-governance": "security",
+};
 export const metadata = pageMetadata(
   "Enterprise Technology Solutions",
   description,
@@ -36,6 +45,7 @@ export default function SolutionsPage() {
                 key={item.slug}
               >
                 <span>{item.label} / CURRENT SERVICE</span>
+                <BrandVisual kind={serviceVisuals[item.slug]} />
                 <h2>{item.title}</h2>
                 <p>{item.description}</p>
                 <Arrow diagonal />

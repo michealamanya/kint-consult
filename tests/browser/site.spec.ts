@@ -6,6 +6,11 @@ test("homepage, desktop navigation and accessibility", async ({
   request,
 }) => {
   await page.goto("/");
+  const policy = (await request.get("/")).headers()["content-security-policy"];
+  expect(policy).toContain("script-src 'self'");
+  expect(policy).not.toContain("'unsafe-eval'");
+  expect(policy).not.toContain(" ws:");
+  expect(policy).not.toContain(" wss:");
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute(
     "href",
     /^\/icon(?:\?|$)/,
@@ -47,6 +52,9 @@ test("homepage, desktop navigation and accessibility", async ({
     .toBeGreaterThan(0);
   await page.screenshot({ path: ".qa/home-desktop.png", fullPage: true });
   await page.screenshot({ path: ".qa/hero-desktop.png" });
+  await page
+    .locator(".capability-section")
+    .screenshot({ path: ".qa/capabilities-desktop.png" });
   const audit = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
     .analyze();
@@ -85,6 +93,11 @@ test("mobile navigation, focus, layout and intelligence status", async ({
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
   await page.screenshot({ path: ".qa/home-mobile.png", fullPage: true });
   await page.screenshot({ path: ".qa/hero-mobile.png" });
+  await page.locator(".capability-section").screenshot({
+    path: ".qa/capabilities-mobile.png",
+    // Keep fixed navigation out of this tall section-only capture.
+    style: ".site-header, .skip-link { visibility: hidden !important; }",
+  });
   await page
     .locator(".data-section")
     .screenshot({ path: ".qa/data-flow-mobile.png" });
@@ -212,31 +225,174 @@ test("contact API rejects bad origins and malformed input", async ({
 });
 
 test("narrow screens have no horizontal overflow", async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 740 });
+  test.setTimeout(90000);
+  for (const width of [320, 390, 768, 1024]) {
+    await page.setViewportSize({ width, height: 844 });
+    for (const path of [
+      "/",
+      "/about",
+      "/industries",
+      "/solutions",
+      "/intelligence",
+      "/insights",
+      "/contact",
+      "/insights/data-foundations-industrial-intelligence",
+      "/industries/petroleum",
+      "/solutions/erp-odoo",
+      "/intelligence/supplier",
+      "/privacy",
+    ]) {
+      await page.goto(path);
+      await page.evaluate(() => document.fonts.ready);
+      const overflow = await page.evaluate(() =>
+        [...document.querySelectorAll("body *")]
+          .filter((element) => {
+            const bounds = element.getBoundingClientRect();
+            return bounds.right > innerWidth + 1 && bounds.width > 0;
+          })
+          .map((element) => ({
+            tag: element.tagName,
+            class: element.className,
+            width: Math.round(element.getBoundingClientRect().width),
+          })),
+      );
+      expect(overflow, `${path} at ${width}px`).toEqual([]);
+    }
+  }
+});
+
+test("layout grows with large screens and reflows on resize", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.goto("/");
+  let previousWidth = 0;
+  for (const width of [1440, 1920, 2560, 3440]) {
+    await page.setViewportSize({ width, height: 1080 });
+    await page.evaluate(() => document.fonts.ready);
+    const container = await page.locator(".hero > .container").boundingBox();
+    expect(container!.width).toBeGreaterThan(width * 0.85);
+    expect(container!.width).toBeGreaterThan(previousWidth);
+    previousWidth = container!.width;
+    const diagram = await page.locator(".connection-visual").boundingBox();
+    expect(diagram!.width).toBeGreaterThan(container!.width * 0.4);
+    for (const path of [
+      "/",
+      "/industries",
+      "/solutions",
+      "/contact",
+      "/insights/erp-implementation-process-first",
+    ]) {
+      await page.goto(path);
+      await page.evaluate(() => document.fonts.ready);
+      if (path.startsWith("/insights/")) {
+        const article = await page.locator(".article-body").boundingBox();
+        const frame = await page
+          .locator(".content-section > .container")
+          .boundingBox();
+        expect(
+          article!.width,
+          "insight article fills its fluid container",
+        ).toBeGreaterThan(frame!.width * 0.95);
+      }
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+        `${path} at ${width}px`,
+      ).toBe(true);
+    }
+    await page.goto("/");
+    if (width === 1920 || width === 3440) {
+      await page.screenshot({ path: `.qa/responsive-${width}.png` });
+    }
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(
+    page.getByRole("button", { name: "Menu", exact: true }),
+  ).toBeVisible();
+  const copy = await page.locator(".hero-copy").boundingBox();
+  const visual = await page.locator(".hero-visual").boundingBox();
+  expect(visual!.y).toBeGreaterThanOrEqual(copy!.y + copy!.height);
+});
+
+test("clay theme accessibility across core and detail pages", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
   for (const path of [
-    "/",
     "/about",
     "/industries",
     "/solutions",
-    "/intelligence",
     "/insights",
-    "/contact",
-    "/insights/data-foundations-industrial-intelligence",
+    "/privacy",
+    "/industries/petroleum",
+    "/solutions/erp-odoo",
+    "/intelligence/supplier",
+    "/insights/erp-implementation-process-first",
   ]) {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);
-    const overflow = await page.evaluate(() =>
-      [...document.querySelectorAll("body *")]
-        .filter((element) => {
-          const bounds = element.getBoundingClientRect();
-          return bounds.right > innerWidth + 1 && bounds.width > 0;
-        })
-        .map((element) => ({
-          tag: element.tagName,
-          class: element.className,
-          width: Math.round(element.getBoundingClientRect().width),
+    if (["/about", "/solutions", "/insights"].includes(path)) {
+      await page.screenshot({ path: `.qa/clay-${path.slice(1)}.png` });
+    }
+    const audit = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .analyze();
+    expect(
+      audit.violations.map((violation) => ({
+        id: violation.id,
+        nodes: violation.nodes.map((node) => ({
+          target: node.target,
+          summary: node.failureSummary,
         })),
-    );
-    expect(overflow, path).toEqual([]);
+      })),
+      path,
+    ).toEqual([]);
   }
+});
+
+test("gold hover and keyboard states retain accessible contrast", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.goto("/");
+  const primary = page.getByRole("link", { name: "Explore KINT", exact: true });
+  await primary.hover();
+  await page.waitForTimeout(250);
+  await page.screenshot({ path: ".qa/gold-hover-hero.png" });
+  for (const locator of [
+    primary,
+    page.locator(".intelligence-topics a").first(),
+    page.locator(".capability-grid article:first-child a"),
+  ]) {
+    await locator.hover();
+    await page.waitForTimeout(250);
+    const audit = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .analyze();
+    expect(audit.violations).toEqual([]);
+  }
+  await page.goto("/solutions");
+  const topic = page.locator(".topic-link").first();
+  await topic.hover();
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await topic.hover();
+  await expect(topic).toHaveCSS("transform", "none");
+  await topic.focus();
+  await page.keyboard.press("Tab");
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
 });

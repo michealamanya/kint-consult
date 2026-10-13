@@ -4,6 +4,22 @@ const config: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   async headers() {
+    const isDevelopment = process.env.NODE_ENV === "development";
+    const contentSecurityPolicy = [
+      "default-src 'self'",
+      // React's development debugger needs eval; never allow it in production.
+      `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""} https://challenges.cloudflare.com`,
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "font-src 'self'",
+      // WebSocket connections support local hot module replacement.
+      `connect-src 'self'${isDevelopment ? " ws: wss:" : ""} https://challenges.cloudflare.com`,
+      "frame-src https://challenges.cloudflare.com",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+    ].join("; ");
     return [
       {
         source: "/(.*)",
@@ -17,8 +33,7 @@ const config: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+            value: contentSecurityPolicy,
           },
         ],
       },

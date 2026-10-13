@@ -6,7 +6,6 @@ export const insights = [
     description:
       "Why structured information, provenance and context come before industrial AI.",
     readTime: "4 min read",
-    image: "diagram",
     sections: [
       {
         heading: "Start with an answerable question",
@@ -38,7 +37,6 @@ export const insights = [
     description:
       "A practical starting point for Odoo and enterprise systems implementation.",
     readTime: "3 min read",
-    image: "grid",
     sections: [
       {
         heading: "Map the work that actually happens",
@@ -70,7 +68,6 @@ export const insights = [
     description:
       "Connecting operational reporting to responsibility, action and reliable sources.",
     readTime: "3 min read",
-    image: "lines",
     sections: [
       {
         heading: "Define the decision before the metric",

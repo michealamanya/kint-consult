@@ -1,0 +1,121 @@
+/* Fluid presentation across phones, tablets and large displays. */
+.article-header,
+.article-body {
+  max-width: none;
+  width: 100%;
+}
+.article-header h1 {
+  max-width: 28ch;
+  font-size: clamp(2.25rem, 4.5vw, 6.5rem);
+}
+.article-body > section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: var(--space-column);
+  margin: 0;
+  padding: var(--space-heading) 0;
+  border-bottom: 1px solid var(--line);
+}
+.article-body > section:first-child {
+  padding-top: 0;
+}
+.article-body h2 {
+  font-size: clamp(1.75rem, 2vw, 3rem);
+}
+.article-section-copy p {
+  max-width: 74ch;
+}
+.article-section-copy p:first-child {
+  margin-top: 0;
+}
+@media (max-width: 900px) {
+  .article-body > section {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .article-body h2 {
+    margin-bottom: 0;
+  }
+}
+@media (min-width: 1440px) {
+  :root {
+    --space-gutter: clamp(56px, 4vw, 144px);
+    --space-section: clamp(64px, 4vw, 128px);
+    --space-section-compact: clamp(48px, 3vw, 96px);
+    --space-heading: clamp(32px, 2vw, 64px);
+    --space-column: clamp(56px, 3.5vw, 112px);
+    --type-body: clamp(1.125rem, 0.85rem + 0.3vw, 1.5rem);
+    --type-ui: clamp(1rem, 0.8rem + 0.22vw, 1.25rem);
+    --type-label: clamp(0.875rem, 0.7rem + 0.2vw, 1.125rem);
+    --type-card-title: clamp(1.625rem, 1rem + 0.7vw, 2.5rem);
+  }
+  h1 {
+    font-size: clamp(3.75rem, 4vw, 6.5rem);
+  }
+  h2 {
+    font-size: clamp(2.75rem, 3vw, 5rem);
+  }
+  .hero h1 {
+    font-size: clamp(3.375rem, 3.9vw, 6.5rem);
+  }
+  .hero-copy > p:not(.eyebrow),
+  .intro-description {
+    font-size: clamp(1.25rem, 1.1vw, 1.75rem);
+  }
+  .hero-copy > p:not(.eyebrow) {
+    max-width: 38ch;
+  }
+  .hero-image {
+    height: clamp(480px, 30vw, 880px);
+  }
+  .header-inner {
+    padding: 14px clamp(20px, 1.5vw, 48px);
+  }
+  .main-nav {
+    gap: clamp(10px, 1vw, 32px);
+  }
+  .main-nav > a {
+    padding: 14px clamp(10px, 0.8vw, 24px);
+  }
+  .brand-logo {
+    width: clamp(78px, 4.5vw, 112px);
+    height: auto;
+  }
+  .brand-visual :is(img, svg),
+  .topic-link .brand-visual :is(img, svg) {
+    height: clamp(180px, 12vw, 360px);
+  }
+  .connection-nodes .brand-visual :is(img, svg) {
+    height: clamp(85px, 6vw, 180px);
+  }
+  .connection-visual {
+    padding: clamp(28px, 2vw, 64px);
+  }
+  .positioning-grid > div {
+    max-width: none;
+  }
+  .positioning-summary {
+    max-width: 38ch;
+  }
+  .insight-art {
+    height: clamp(180px, 13vw, 390px);
+  }
+  .insight-art .brand-visual :is(img, svg) {
+    height: 100%;
+  }
+  .sector-item p,
+  .solution-row p,
+  .capability-grid h3,
+  .insight-item h3 {
+    max-width: 32ch;
+  }
+  .intelligence-layout h2 {
+    font-size: clamp(3rem, 3.35vw, 5.5rem);
+  }
+  .intelligence-detail > p:first-child {
+    max-width: 38ch;
+  }
+  .topic-link h2 {
+    font-size: clamp(1.875rem, 1.6vw, 3rem);
+  }
+}
