@@ -4,6 +4,13 @@
 
 `kint-logo.jpg`: the supplied KINT logo, used for header/footer branding, schema and generated browser/Apple icons.
 
-`industrial-plant.jpg`: illustrative industry photography from https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1800&q=85. This is not a KINT facility or completed project. Next Image serves responsive formats. Preserve source attribution and verify publication rights as part of launch preparation.
+`industrial.jpg`: user-supplied abstract network illustration. It does not depict a KINT facility or completed project and is not used in the homepage hero.
 
-All AI-generated raster artwork has been removed. Service visuals use local SVG icons.
+`background.jpg`: user-supplied network image used as the homepage hero background.
+
+Service artwork appears in related areas:
+`cloud img.avif` for cloud infrastructure, `Data-intelligence.jpg` for industrial intelligence, `digital transformation.png` for digital transformation, `ERP systems.png` for ERP systems, `odoo-erp-features-1.jpg` for ERP and Odoo, and `campaign-monitor-dashboards.webp` for automation and reporting.
+`intelligence img.jpg` is used for the Industrial intelligence insight card.
+`erp sys.jpg` is used for the ERP insight card.
+
+All AI-generated raster artwork has been removed. Service visuals use local images or SVG icons.

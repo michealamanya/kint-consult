@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { company, solutions } from "@/data/site";
+import { BrandVisual, type VisualKind } from "@/components/brand-visual";
 import {
   Button,
   ContactCta,
@@ -13,6 +14,15 @@ export function generateStaticParams() {
   return solutions.map((item) => ({ slug: item.slug }));
 }
 export const dynamicParams = false;
+const solutionVisuals: Record<string, VisualKind> = {
+  "industrial-intelligence": "intelligence",
+  "ai-data": "ai",
+  "erp-odoo": "odoo",
+  "software-platforms": "digital-transformation",
+  "cloud-infrastructure": "cloud",
+  "automation-reporting": "reporting",
+  "cybersecurity-governance": "security",
+};
 export async function generateMetadata({
   params,
 }: {
@@ -57,6 +67,7 @@ export default async function SolutionPage({
                 ? "A connected industrial view."
                 : "Start with the business need."}
             </h2>
+            <BrandVisual kind={solutionVisuals[slug]} />
           </div>
           <div className="editorial-body">
             <p>{item.intro}</p>

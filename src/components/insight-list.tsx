@@ -14,9 +14,14 @@ export function InsightList() {
         >
           <div className="insight-art" aria-hidden="true">
             <BrandVisual
-              kind={index === 0 ? "ai" : index === 1 ? "erp" : "reporting"}
+              kind={
+                item.slug === "operational-visibility-reporting"
+                  ? "digital-transformation"
+                  : item.slug === "data-foundations-industrial-intelligence"
+                    ? "intelligence-insight"
+                    : "erp-insight"
+              }
             />
-            <span className="art-caption">KINT / PERSPECTIVES</span>
           </div>
           <div className="insight-meta">
             <span>{item.category}</span>

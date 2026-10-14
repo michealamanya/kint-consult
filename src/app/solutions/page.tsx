@@ -14,8 +14,8 @@ const description =
   "ERP and Odoo, AI and data, custom software, cloud infrastructure, automation and information governance for business and industrial organisations.";
 const serviceVisuals: Record<string, VisualKind> = {
   "ai-data": "ai",
-  "erp-odoo": "erp",
-  "software-platforms": "software",
+  "erp-odoo": "odoo",
+  "software-platforms": "digital-transformation",
   "cloud-infrastructure": "cloud",
   "automation-reporting": "reporting",
   "cybersecurity-governance": "security",

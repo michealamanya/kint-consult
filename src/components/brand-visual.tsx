@@ -11,7 +11,15 @@ export type VisualKind =
   | "cloud"
   | "ai"
   | "software"
-  | "security";
+  | "security"
+  | "systems"
+  | "data"
+  | "decisions"
+  | "intelligence"
+  | "intelligence-insight"
+  | "erp-insight"
+  | "digital-transformation"
+  | "odoo";
 
 const servicePaths = {
   erp: "M12 6v5m-6 5h12M6 16v-5m12 5v-5M9 3h6v4H9ZM3 16h6v5H3Zm12 0h6v5h-6Z",
@@ -22,9 +30,53 @@ const servicePaths = {
   security: "m12 2 8 3v7c0 5-5 8-8 10-3-2-8-5-8-10V5Zm-4 10 3 3 5-6",
 };
 
+const connectionImages = {
+  systems: { src: "/images/systems.jpg", width: 612, height: 408 },
+  data: { src: "/images/data.jpg", width: 612, height: 408 },
+  decisions: { src: "/images/decision.jpg", width: 736, height: 736 },
+};
+
+const serviceImages = {
+  erp: { src: "/images/ERP%20systems.png", width: 1536, height: 1024 },
+  reporting: {
+    src: "/images/campaign-monitor-dashboards.webp",
+    width: 880,
+    height: 495,
+  },
+  cloud: { src: "/images/cloud%20img.avif", width: 422, height: 470 },
+  intelligence: {
+    src: "/images/Data-intelligence.jpg",
+    width: 1200,
+    height: 675,
+  },
+  "intelligence-insight": {
+    src: "/images/intelligence%20img.jpg",
+    width: 1024,
+    height: 682,
+  },
+  "erp-insight": {
+    src: "/images/erp%20sys.jpg",
+    width: 760,
+    height: 424,
+  },
+  "digital-transformation": {
+    src: "/images/digital%20transformation.png",
+    width: 1536,
+    height: 1024,
+  },
+  odoo: {
+    src: "/images/odoo-erp-features-1.jpg",
+    width: 1200,
+    height: 700,
+  },
+} as const;
+
 /** User-supplied photos and lightweight service icons; labels supply the meaning. */
 export function BrandVisual({ kind }: { kind: VisualKind }) {
-  const photo = sectorImages[kind as keyof typeof sectorImages];
+  const photo =
+    serviceImages[kind as keyof typeof serviceImages] ??
+    connectionImages[kind as keyof typeof connectionImages] ??
+    sectorImages[kind as keyof typeof sectorImages];
   return (
     <div
       className={`brand-visual brand-visual-${kind}${photo ? " brand-photo" : ""}`}
@@ -65,15 +117,15 @@ export function ConnectionVisual() {
       </div>
       <div className="connection-nodes" aria-hidden="true">
         <div>
-          <BrandVisual kind="erp" />
+          <BrandVisual kind="systems" />
           <span>Systems</span>
         </div>
         <div>
-          <BrandVisual kind="reporting" />
+          <BrandVisual kind="data" />
           <span>Data</span>
         </div>
         <div>
-          <BrandVisual kind="cloud" />
+          <BrandVisual kind="decisions" />
           <span>Decisions</span>
         </div>
       </div>

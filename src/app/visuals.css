@@ -18,6 +18,14 @@
 .brand-photo img {
   object-fit: cover;
 }
+.brand-visual-erp img,
+.brand-visual-reporting img,
+.brand-visual-cloud img,
+.brand-visual-digital-transformation img,
+.brand-visual-odoo img {
+  object-fit: contain;
+  background: #fff;
+}
 .brand-visual svg {
   padding: 28px;
 }
@@ -113,6 +121,9 @@
 .topic-link .brand-visual :is(img, svg) {
   height: 180px;
 }
+.editorial-split > div:first-child > .brand-visual {
+  margin-top: 24px;
+}
 .insight-art {
   padding: 0;
 }
@@ -149,27 +160,7 @@
 .solution-row {
   min-height: 88px;
 }
-.hero-image {
-  height: 480px;
-}
-.hero-image img {
-  object-fit: cover;
-}
-.hero-image {
-  background: #29251f;
-}
-.hero-image .image-shade {
-  background: linear-gradient(
-    180deg,
-    #211b121a 0%,
-    transparent 55%,
-    #211b12d9 100%
-  );
-}
 @media (max-width: 1100px) {
-  .hero-image {
-    height: 400px;
-  }
   .positioning-grid {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -179,9 +170,6 @@
   }
 }
 @media (max-width: 760px) {
-  .hero-image {
-    height: 300px;
-  }
   .connection-visual {
     padding: 24px 14px;
   }

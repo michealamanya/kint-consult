@@ -116,28 +116,9 @@ body {
 .priority-list li {
   font-size: var(--type-body);
 }
-.image-overline {
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-}
-.image-title > span {
-  font-size: var(--type-label);
-  letter-spacing: 0.08em;
-}
-.image-caption {
-  font-size: var(--type-label);
-  flex-wrap: wrap;
-  gap: 4px 16px;
-}
-.visual-coordinate {
-  font-size: 0.625rem;
-}
 .wordmark-sub {
   font-size: 0.625rem;
   letter-spacing: 0.08em;
-}
-.art-caption {
-  font-size: 0.625rem;
 }
 .footer-brand p {
   font-size: 1.25rem;

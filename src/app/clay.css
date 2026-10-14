@@ -199,25 +199,6 @@ body {
 .hero-footnote {
   margin-top: 20px;
 }
-.image-title > span {
-  color: #f3cd75;
-}
-.hero-image {
-  height: 440px;
-  border: 6px solid var(--surface-raised);
-  border-radius: 32px;
-  box-shadow: var(--shadow-surface);
-}
-.hero-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  box-shadow:
-    inset 2px 2px 8px #ffffff24,
-    inset -3px -3px 10px #201b1238;
-  pointer-events: none;
-}
 .positioning {
   border-top: 0;
 }
@@ -588,18 +569,6 @@ body {
   background: #fff4db;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .hero-image img {
-    transition: transform 0.5s ease;
-  }
-  .hero-image:hover img {
-    transform: scale(1.025);
-  }
-  .hero-image:hover {
-    border-color: #ecd5a0;
-  }
-}
-
 @media (max-width: 1100px) {
   .header-inner {
     padding-inline: 16px;
@@ -665,17 +634,6 @@ body {
   }
   .hero {
     padding-top: 20px;
-  }
-  .hero-visual {
-    padding-left: 0;
-  }
-  .visual-coordinate {
-    display: none;
-  }
-  .hero-image {
-    height: 260px;
-    border-width: 4px;
-    border-radius: 26px;
   }
   .hero-specialisms {
     display: grid;
@@ -783,8 +741,7 @@ body {
   .button:hover,
   .button:active,
   .topic-link:hover,
-  .insight-item:hover,
-  .hero-image:hover img {
+  .insight-item:hover {
     transform: none;
   }
 }

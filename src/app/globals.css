@@ -325,17 +325,29 @@ a:hover .text-link .arrow {
 }
 .hero {
   padding: 36px 0 40px;
+  background: url("/images/background.jpg") center / cover no-repeat;
 }
 .hero-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  gap: var(--space-column);
+  grid-template-columns: 1fr;
   align-items: center;
 }
 .hero-copy {
+  max-width: 850px;
+  margin-inline: auto;
   padding-bottom: 0;
+  text-align: center;
+}
+.hero .eyebrow,
+.hero-actions,
+.hero-footnote {
+  justify-content: center;
+}
+.hero-copy > p:not(.eyebrow) {
+  margin-inline: auto;
 }
 .hero h1 {
+  color: var(--ivory);
   font-size: clamp(38px, 3.9vw, 54px);
   line-height: 1.16;
   letter-spacing: -0.045em;
@@ -346,12 +358,12 @@ a:hover .text-link .arrow {
   display: block;
 }
 .hero h1 em {
-  color: var(--brand-ink);
+  color: #f3cd75;
   letter-spacing: -0.035em;
 }
 .hero-copy > p:not(.eyebrow) {
   font-size: 15px;
-  color: var(--muted);
+  color: var(--ivory);
   max-width: 445px;
   margin-top: 24px;
   line-height: 1.85;
@@ -369,7 +381,10 @@ a:hover .text-link .arrow {
   margin-top: 24px;
   font-size: 11px;
   line-height: 1.8;
-  color: var(--muted);
+  color: var(--ivory);
+}
+.hero .text-link {
+  color: var(--ivory);
 }
 .small-cross {
   width: 29px;
@@ -383,88 +398,6 @@ a:hover .text-link .arrow {
   color: var(--brand-ink);
   font-size: 22px;
   font-weight: 400;
-}
-.hero-visual {
-  position: relative;
-  padding-left: 20px;
-}
-.hero-image {
-  position: relative;
-  height: 400px;
-  background: var(--deep);
-  overflow: hidden;
-  border: 1px solid #ffffff99;
-  border-radius: var(--radius-surface);
-  box-shadow:
-    0 3px 6px #25221c08,
-    0 12px 24px #25221c12;
-}
-.hero-image img {
-  object-fit: cover;
-  object-position: 52% center;
-}
-.image-shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    #211b1238 0%,
-    transparent 40%,
-    #211b12db 100%
-  );
-}
-.image-overline {
-  position: absolute;
-  top: 25px;
-  left: 28px;
-  right: 28px;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  font-size: 8px;
-  letter-spacing: 0.17em;
-  font-weight: 600;
-}
-.image-overline > span:last-child {
-  font-size: 23px;
-  line-height: 1;
-}
-.image-title {
-  position: absolute;
-  bottom: 32px;
-  left: 30px;
-  color: white;
-}
-.image-title > span {
-  font-size: 9px;
-  letter-spacing: 0.18em;
-}
-.image-title strong {
-  display: block;
-  margin-top: 9px;
-  font-family: "Newsreader Variable", Georgia, serif;
-  font-size: 36px;
-  font-weight: 400;
-  line-height: 1.1;
-}
-.image-caption {
-  display: flex;
-  justify-content: space-between;
-  font-size: 9px;
-  gap: 16px;
-  letter-spacing: 0.04em;
-  padding-top: 13px;
-  color: var(--muted);
-}
-.visual-coordinate {
-  position: absolute;
-  left: 0;
-  top: 0;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 7px;
-  letter-spacing: 0.14em;
-  color: var(--muted);
 }
 .positioning {
   padding: var(--space-section-compact) 0;
@@ -669,10 +602,13 @@ a:hover .text-link .arrow {
   font-size: 13px;
   margin: 23px 0 28px;
 }
-.intelligence-detail > p:first-child {
+.intelligence-detail > p:first-of-type {
   font-size: 13px;
   color: #e0d8c9;
   max-width: 400px;
+}
+.intelligence-detail > .brand-visual {
+  margin-bottom: 20px;
 }
 .intelligence-topics {
   display: grid;
@@ -859,14 +795,6 @@ a:hover .text-link .arrow {
   border: 1px solid #dac8a3;
   border-radius: var(--radius-control);
   box-shadow: inset 0 1px 0 #ffffff70;
-}
-.art-caption {
-  position: absolute;
-  bottom: 18px;
-  left: 23px;
-  font-size: 7px;
-  letter-spacing: 0.12em;
-  color: #6c541f;
 }
 .insight-meta {
   display: flex;
@@ -1349,12 +1277,6 @@ a:hover .text-link .arrow {
     gap: 18px;
     font-size: 10px;
   }
-  .hero-layout {
-    gap: 30px;
-  }
-  .hero-image {
-    height: 400px;
-  }
   .hero-actions {
     gap: 20px;
   }
@@ -1447,9 +1369,6 @@ a:hover .text-link .arrow {
     font-size: 12px;
     gap: 20px;
   }
-  .hero-image {
-    height: 380px;
-  }
   .sector-index {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1541,22 +1460,6 @@ a:hover .text-link .arrow {
   .hero-footnote {
     display: flex;
     margin-top: 22px;
-  }
-  .hero-visual {
-    padding-left: 16px;
-  }
-  .hero-image {
-    height: 260px;
-  }
-  .image-title strong {
-    font-size: 32px;
-  }
-  .image-title {
-    left: 23px;
-    bottom: 26px;
-  }
-  .image-caption {
-    font-size: 8px;
   }
   .positioning {
     padding: var(--space-section) 0;

@@ -9,6 +9,7 @@ import {
   PageIntro,
 } from "@/components/ui";
 import { DataFlow } from "@/components/data-flow";
+import { BrandVisual } from "@/components/brand-visual";
 import { pageMetadata, pageSchema } from "@/lib/seo";
 const description =
   "KINT Intelligence is a developing industrial data and AI-assisted research platform direction, starting with petroleum and extending to related sectors.";
@@ -36,6 +37,7 @@ export default function IntelligencePage() {
                 <br />
                 <em>industrial economy.</em>
               </h2>
+              <BrandVisual kind="intelligence" />
             </div>
             <div className="editorial-body">
               <p>

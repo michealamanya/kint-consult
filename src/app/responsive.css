@@ -65,9 +65,6 @@
   .hero-copy > p:not(.eyebrow) {
     max-width: 38ch;
   }
-  .hero-image {
-    height: clamp(480px, 30vw, 880px);
-  }
   .header-inner {
     padding: 14px clamp(20px, 1.5vw, 48px);
   }

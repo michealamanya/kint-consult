@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { industries, solutions, intelligenceAreas } from "@/data/site";
 import { Arrow, Button, Container, Eyebrow } from "./ui";
@@ -12,7 +11,7 @@ export function Hero() {
       <Container>
         <div className="hero-layout">
           <div className="hero-copy">
-            <Eyebrow>KINT Consult Limited</Eyebrow>
+            <Eyebrow light>KINT Consult Limited</Eyebrow>
             <h1>
               <span>Industrial intelligence.</span>
               <em>Digital transformation.</em>
@@ -42,33 +41,6 @@ export function Hero() {
                 <br />
                 KINT Intelligence is in development.
               </span>
-            </div>
-          </div>
-          <div className="hero-visual">
-            <div className="hero-image">
-              <Image
-                src="/images/industrial-plant.jpg"
-                alt="Pipes, steel structures and processing infrastructure at an industrial facility"
-                fill
-                priority
-                sizes="(max-width: 760px) 100vw, 52vw"
-              />
-              <div className="image-shade" />
-              <div className="image-overline">
-                <span>KINT / INDUSTRIAL OUTLOOK</span>
-                <span aria-hidden="true">↗</span>
-              </div>
-              <div className="image-title">
-                <span>CONNECTED SYSTEMS.</span>
-                <strong>Informed industry.</strong>
-              </div>
-            </div>
-            <div className="image-caption">
-              <span>Illustrative industry photography</span>
-              <span>Industrial outlook</span>
-            </div>
-            <div className="visual-coordinate" aria-hidden="true">
-              01 — A CONNECTED INDUSTRIAL ECONOMY
             </div>
           </div>
         </div>
@@ -239,6 +211,7 @@ export function IntelligenceSection() {
             </Button>
           </div>
           <div className="intelligence-detail">
+            <BrandVisual kind="intelligence" />
             <p>
               Structured industry data. AI-assisted research. Human judgement.
             </p>
