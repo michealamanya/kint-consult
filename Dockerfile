@@ -8,7 +8,7 @@ RUN npm ci
 FROM base AS builder
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
-ARG NEXT_PUBLIC_SITE_URL=https://kintconsults.com
+ARG NEXT_PUBLIC_SITE_URL=https://kintconsult.com
 ARG NEXT_PUBLIC_CONTACT_EMAIL
 ARG NEXT_PUBLIC_CONTACT_PHONE
 ARG NEXT_PUBLIC_CONTACT_ADDRESS

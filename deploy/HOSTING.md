@@ -1,32 +1,49 @@
 # Hosting KINT Consult
 
-The application is a Node/Next.js server. Use the included Docker image behind Nginx on a Linux host; uploading `public/` alone will not run the site.
+Use your existing Nginx server as the HTTPS reverse proxy. KINT is a Node/Next.js application, managed by systemd and listening on `127.0.0.1:3000`. Nginx forwards requests to it. Uploading `public/` alone will not run this site.
 
-## Configure and start
+These instructions assume a Linux server with systemd and Node/npm installed. The included Docker configuration remains an alternative.
 
-1. Point the domain's DNS records at the server. The current canonical URL is `https://kintconsults.com`; change `NEXT_PUBLIC_SITE_URL` and the Nginx domain/certificate settings if your final domain differs.
-2. From the repository root on the server, create the production environment file:
+## Build and run behind your existing Nginx
+
+1. Upload the repository to `/var/www/kintconsult`, excluding `.git`, `node_modules`, `.next` and local secret files. Build on the Linux server rather than copying Windows dependencies.
+2. Create a dedicated service account if it does not already exist, and grant it ownership of this application directory:
 
    ```sh
-   cp .env.example .env.production
-   chmod 600 .env.production
+   sudo useradd --system --user-group --home-dir /var/www/kintconsult --shell /usr/sbin/nologin kint
+   sudo chown -R kint:kint /var/www/kintconsult
    ```
 
-   The supplied email and telephone are already configured. Public settings are build-time values; rebuild when changing them. Keep this file out of Git.
-
-3. Start the website with Docker Engine and the Compose plugin installed:
+3. Create `.env.production` from `.env.example`, set the final `NEXT_PUBLIC_SITE_URL`, then secure and build the application:
 
    ```sh
-   docker compose --env-file .env.production -f deploy/compose.yaml up -d --build
-   docker compose --env-file .env.production -f deploy/compose.yaml ps
+   cd /var/www/kintconsult
+   sudo -u kint cp .env.example .env.production
+   sudo chmod 600 .env.production
+   sudo -u kint npm ci
+   sudo -u kint npm run build
+   ```
+
+   The existing email and telephone defaults are included. Next.js reads `.env.production` during the production build. Rebuild when public settings change.
+
+4. Check `command -v node`. The unit uses `/usr/bin/node`; adjust its `ExecStart` if your Node binary is elsewhere. The application directory, service account and environment-file path must agree with your installation.
+5. Install and start the supplied unit:
+
+   ```sh
+   sudo cp deploy/kint-consult.service /etc/systemd/system/kint-consult.service
+   sudo systemctl daemon-reload
+   sudo systemctl enable --now kint-consult
+   sudo systemctl status kint-consult --no-pager
    curl -I http://127.0.0.1:3000
    ```
 
-   The application port binds only to loopback. Compose adds automatic restart, a health check and bounded container logs.
+   The service starts on boot, restarts if it exits and keeps the application port private. If port 3000 is already occupied, choose a free port in the unit's `PORT` setting and both Nginx `proxy_pass` directives, then restart the service.
 
 ## HTTPS proxy
 
-Install Nginx and obtain a TLS certificate covering both the apex domain and `www`. Complete certificate issuance before enabling the HTTPS configuration. Copy `deploy/nginx.conf.example` to your Nginx site configuration, then validate and reload:
+Use the existing Nginx installation and TLS certificates. The example currently targets `kintconsult.com` and `www.kintconsult.com`; update its hostnames and certificate paths to your final domain.
+
+Add a dedicated KINT site or merge the example into the matching domain configuration. Keep other sites and your working TLS settings intact. Define `kint_enquiries` only once in the Nginx `http` context. If certificates are not issued yet, complete issuance before enabling the HTTPS blocks. Validate and reload:
 
 ```sh
 sudo nginx -t
@@ -41,21 +58,33 @@ Check the homepage, an insight article, all sector photos, `/icon`, `/sitemap.xm
 
 Enquiries currently use **draft mode**: visitors can save a local enquiry draft or use the email/telephone links. To enable submission, configure `CONTACT_WEBHOOK_URL`, `CONTACT_WEBHOOK_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`, rebuild, and verify real delivery through your receiver. The site does not claim to send enquiries while those settings are missing.
 
-## Updates and rollback
+## Updates and logs
 
-Keep a copy of the previous working image before rebuilding:
+Back up the current release and production environment file before an update. Stop only KINT while replacing its files or rebuilding, so other Nginx sites remain available:
 
 ```sh
-docker image tag kint-consult:latest kint-consult:previous
+sudo systemctl stop kint-consult
+# Upload the new source files into /var/www/kintconsult.
+cd /var/www/kintconsult
+sudo -u kint npm ci
+sudo -u kint npm run build
+sudo systemctl start kint-consult
+curl -I http://127.0.0.1:3000
+sudo journalctl -u kint-consult -n 100 --no-pager
+```
+
+To roll back, restore the previous release and its matching environment file, rebuild it and restart `kint-consult`. Changing the service unit requires `sudo systemctl daemon-reload` before restarting.
+
+## Docker alternative
+
+If you prefer containers behind the same Nginx proxy, use Compose instead of the systemd unit:
+
+```sh
 docker compose --env-file .env.production -f deploy/compose.yaml up -d --build
-docker compose --env-file .env.production -f deploy/compose.yaml logs --tail=100 website
 ```
 
-If an update fails, restore the previous image and recreate without building:
+Choose one application runner for the configured port. The Nginx configuration works with either runner.
 
-```sh
-docker image tag kint-consult:previous kint-consult:latest
-docker compose --env-file .env.production -f deploy/compose.yaml up -d --no-build --force-recreate
-```
+Local verification covers the standalone production server and browser behavior. The service unit, Nginx configuration, DNS and TLS certificates must be validated on your actual hosting server.
 
-Local verification covers the standalone production server and browser behavior. Docker Engine, Nginx, DNS and issued TLS certificates must be validated on the deployment host.
+References: [Nginx proxy configuration](https://nginx.org/en/docs/http/ngx_http_proxy_module.html) and [systemd service documentation](https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html).
