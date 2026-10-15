@@ -1,3 +1,4 @@
+import purpose from "../../../content/company.json";
 import {
   Button,
   ContactCta,
@@ -25,7 +26,7 @@ export default function AboutPage() {
           <div>
             <Eyebrow>Who we are</Eyebrow>
             <h2>
-              A technology company
+              An advisory and technology company
               <br />
               with an <em>industrial outlook.</em>
             </h2>
@@ -36,10 +37,10 @@ export default function AboutPage() {
               enterprise technology, industrial data and decision support.
             </p>
             <p>
-              Our work spans ERP and business systems, custom software, digital
-              infrastructure, automation and reporting. We design and implement
-              the foundations that help organisations manage information,
-              coordinate operations and make informed decisions.
+              Our work spans industrial advisory, market and opportunity
+              research, business readiness and digital delivery. We help
+              organisations organise evidence, plan practical next steps and
+              build the systems that support them.
             </p>
             <p>
               Our strategic direction extends beyond implementation. Through
@@ -91,6 +92,33 @@ export default function AboutPage() {
             </p>
             <Button href="/intelligence" variant="secondary">
               Our intelligence direction
+            </Button>
+          </div>
+        </Container>
+      </section>
+      <section className="content-section">
+        <Container className="editorial-split">
+          <div>
+            <Eyebrow>Our purpose</Eyebrow>
+            <h2>Clarity for the next decision.</h2>
+          </div>
+          <div className="editorial-body">
+            <h3>Our mission</h3>
+            <p>{purpose.mission}</p>
+            <h3>Our vision</h3>
+            <p>{purpose.vision}</p>
+            <h3>Our values</h3>
+            <ul>
+              {purpose.values.map((value) => (
+                <li key={value}>{value}</li>
+              ))}
+            </ul>
+            <p>
+              Our focus starts in Uganda and extends to the wider region. We
+              work through discovery, an agreed scope, delivery and review.
+            </p>
+            <Button href="/partners" variant="secondary">
+              Partner with KINT
             </Button>
           </div>
         </Container>

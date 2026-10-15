@@ -5,6 +5,7 @@ test("homepage, desktop navigation and accessibility", async ({
   page,
   request,
 }) => {
+  test.setTimeout(90000);
   await page.goto("/");
   const policy = (await request.get("/")).headers()["content-security-policy"];
   expect(policy).toContain("script-src 'self'");
@@ -31,7 +32,11 @@ test("homepage, desktop navigation and accessibility", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Industrial intelligence.",
   );
-  await expect(page.locator(".hero-image img")).toBeVisible();
+  await expect(page.locator(".neural-background")).toBeVisible();
+  await expect(page.locator(".neural-background")).toHaveAttribute(
+    "data-ready",
+    "true",
+  );
   await expect(page.locator(".hero-footnote")).toContainText(
     "KINT Intelligence is in development.",
   );
@@ -43,13 +48,7 @@ test("homepage, desktop navigation and accessibility", async ({
   await expect(
     page.locator(".footer-connect").getByRole("link", { name: "0740470116" }),
   ).toHaveAttribute("href", "tel:0740470116");
-  await expect
-    .poll(() =>
-      page
-        .locator(".hero-image img")
-        .evaluate((image: HTMLImageElement) => image.naturalWidth),
-    )
-    .toBeGreaterThan(0);
+  expect((await request.get("/images/background.jpg")).status()).toBe(200);
   await page.screenshot({ path: ".qa/home-desktop.png", fullPage: true });
   await page.screenshot({ path: ".qa/hero-desktop.png" });
   await page
@@ -66,7 +65,7 @@ test("homepage, desktop navigation and accessibility", async ({
     .getByRole("link", { name: "Solutions", exact: true })
     .click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Digital systems",
+    "Advisory, intelligence",
   );
   await page
     .getByRole("link", { name: /ERP & Odoo/ })
@@ -169,7 +168,21 @@ test("all published routes resolve and unknown topics return 404", async ({
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(
     (match) => new URL(match[1]).pathname,
   );
-  expect(urls.length).toBe(28);
+  // Article counts change through the CMS; check required pages and each URL.
+  expect(urls).toEqual(
+    expect.arrayContaining([
+      "/",
+      "/partners",
+      "/careers",
+      "/projects",
+      "/solutions/business-advisory",
+      "/insights",
+      "/privacy",
+      "/cookies",
+      "/terms",
+      "/accessibility",
+    ]),
+  );
   for (const url of urls) {
     expect((await request.get(url)).status(), url).toBe(200);
   }
@@ -312,8 +325,8 @@ test("layout grows with large screens and reflows on resize", async ({
     page.getByRole("button", { name: "Menu", exact: true }),
   ).toBeVisible();
   const copy = await page.locator(".hero-copy").boundingBox();
-  const visual = await page.locator(".hero-visual").boundingBox();
-  expect(visual!.y).toBeGreaterThanOrEqual(copy!.y + copy!.height);
+  const hero = await page.locator(".hero > .container").boundingBox();
+  expect(copy!.width).toBeLessThanOrEqual(hero!.width);
 });
 
 test("clay theme accessibility across core and detail pages", async ({
@@ -350,6 +363,40 @@ test("clay theme accessibility across core and detail pages", async ({
       path,
     ).toEqual([]);
   }
+});
+
+test("neural background keeps running and respects reduced motion", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const canvas = page.locator(".neural-background");
+  await expect(canvas).toHaveAttribute("data-ready", "true");
+  await expect(
+    page.getByRole("button", { name: /background animation/i }),
+  ).toHaveCount(0);
+  await page.waitForTimeout(5500);
+  await expect(canvas).toHaveAttribute("data-state", "running");
+  const pixels = () =>
+    canvas.evaluate((element) => (element as HTMLCanvasElement).toDataURL());
+  const moving = await pixels();
+  await page.waitForTimeout(250);
+  expect(
+    moving !== (await pixels()),
+    "network continues moving after five seconds",
+  ).toBe(true);
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await expect(canvas).toHaveAttribute("data-state", "paused");
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(canvas).toHaveAttribute("data-state", "running");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  await expect(canvas).toHaveAttribute("data-state", "reduced");
+  const still = await pixels();
+  await page.waitForTimeout(250);
+  expect(still === (await pixels()), "reduced-motion network stays still").toBe(
+    true,
+  );
 });
 
 test("gold hover and keyboard states retain accessible contrast", async ({

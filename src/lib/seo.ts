@@ -7,7 +7,7 @@ export function pageMetadata(
   path: string,
 ): Metadata {
   return {
-    title,
+    title: { absolute: `${title} | KINT Consult` },
     description,
     alternates: { canonical: path },
     openGraph: {
@@ -15,6 +15,8 @@ export function pageMetadata(
       description,
       url: path,
       type: "website",
+      siteName: company.name,
+      locale: "en_UG",
       images: [
         {
           url: "/opengraph-image",

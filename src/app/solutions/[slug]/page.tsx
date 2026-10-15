@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { company, solutions } from "@/data/site";
+import { company, solutions, enquiryAreas } from "@/data/site";
 import { BrandVisual, type VisualKind } from "@/components/brand-visual";
 import {
   Button,
@@ -43,6 +43,18 @@ export default async function SolutionPage({
   const item = solutions.find((item) => item.slug === slug);
   if (!item) notFound();
   const developing = slug === "industrial-intelligence";
+  const topicArea = enquiryAreas.includes(item.title)
+    ? item.title
+    : (
+        {
+          "erp-odoo": "ERP / Odoo",
+          "ai-data": "AI & data",
+          "cloud-infrastructure": "Cloud infrastructure",
+          "software-platforms": "Software development",
+          "automation-reporting": "Automation & reporting",
+          "cybersecurity-governance": "Cybersecurity & governance",
+        } as Record<string, string>
+      )[slug] || "General enquiry";
   return (
     <>
       <PageIntro
@@ -67,10 +79,21 @@ export default async function SolutionPage({
                 ? "A connected industrial view."
                 : "Start with the business need."}
             </h2>
-            <BrandVisual kind={solutionVisuals[slug]} />
+            <BrandVisual kind={solutionVisuals[slug] || "intelligence"} />
           </div>
           <div className="editorial-body">
-            <p>{item.intro}</p>
+            {item.problem ? (
+              <>
+                <h3>The challenge</h3>
+                <p>{item.problem}</p>
+                <h3>Our response</h3>
+                <p>{item.response}</p>
+                <h3>Intended outcome</h3>
+                <p>{item.outcome}</p>
+              </>
+            ) : (
+              <p>{item.intro}</p>
+            )}
             <h3>{developing ? "Development areas" : "Engagement areas"}</h3>
             <ol className="priority-list">
               {item.priorities.map((priority, index) => (
@@ -92,7 +115,7 @@ export default async function SolutionPage({
               href={
                 developing
                   ? "/intelligence"
-                  : `/contact?area=${encodeURIComponent(slug === "erp-odoo" ? "ERP / Odoo" : slug === "ai-data" ? "AI & data" : slug === "cloud-infrastructure" ? "Cloud infrastructure" : slug === "software-platforms" ? "Software development" : slug === "automation-reporting" ? "Automation & reporting" : "Cybersecurity & governance")}`
+                  : `/contact?area=${encodeURIComponent(topicArea)}`
               }
               variant="secondary"
             >

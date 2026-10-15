@@ -1,0 +1,44 @@
+name: Package Nginx release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      NEXT_PUBLIC_SITE_URL: https://kintconsult.com
+      NEXT_PUBLIC_CONTACT_EMAIL: admin@kintconsult.com
+      NEXT_PUBLIC_CONTACT_PHONE: "0740470116"
+      NEXT_PUBLIC_CONTACT_ADDRESS: ${{ vars.NEXT_PUBLIC_CONTACT_ADDRESS }}
+      NEXT_PUBLIC_CONTACT_HOURS: ${{ vars.NEXT_PUBLIC_CONTACT_HOURS }}
+      NEXT_PUBLIC_RESPONSE_TIME: ${{ vars.NEXT_PUBLIC_RESPONSE_TIME }}
+      GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+      NEXT_PUBLIC_ANALYTICS_SCRIPT_URL: ${{ vars.NEXT_PUBLIC_ANALYTICS_SCRIPT_URL }}
+      NEXT_PUBLIC_ANALYTICS_DOMAIN: kintconsult.com
+      CMS_AUTH_URL: ${{ vars.CMS_AUTH_URL }}
+      SITE_ENV: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run content:check
+      - run: npm test
+      - run: npm run build
+      - name: Assemble standalone application
+        run: |
+          cp -R public .next/standalone/public
+          mkdir -p .next/standalone/.next
+          cp -R .next/static .next/standalone/.next/static
+          tar -czf kint-release.tar.gz -C .next/standalone .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kint-linux-release-${{ github.sha }}
+          path: kint-release.tar.gz
+          retention-days: 14

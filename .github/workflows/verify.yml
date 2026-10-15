@@ -1,0 +1,44 @@
+name: Verify website
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_PUBLIC_SITE_URL: https://kintconsult.com
+      QA_BASE_URL: http://localhost:3005
+      QA_BROWSER: chromium
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run content:check
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Browser checks against production build
+        shell: bash
+        run: |
+          npm start -- --port 3005 > /tmp/kint-qa.log 2>&1 &
+          site_pid=$!
+          trap 'kill "$site_pid" || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://localhost:3005/api/health; then break; fi
+            sleep 1
+          done
+          npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-diagnostics
+          path: .qa/
+          retention-days: 7

@@ -1,4 +1,5 @@
-import { createHash } from "node:crypto";
+import { deliverEnquiry } from "@/lib/mail-delivery.mjs";
+import { createHash, randomUUID } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { company, enquiryAreas } from "@/data/site";
 import { validateEnquiry } from "@/lib/contact-validation.mjs";
@@ -107,25 +108,17 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const delivered = await fetch(process.env.CONTACT_WEBHOOK_URL!, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.CONTACT_WEBHOOK_TOKEN}`,
-      },
-      body: JSON.stringify({
-        ...value,
-        source: "kint-corporate-website",
-        submittedAt: new Date().toISOString(),
-      }),
-      signal: AbortSignal.timeout(10000),
-      redirect: "error",
+    const reference = `KINT-${randomUUID().toUpperCase()}`;
+    await deliverEnquiry({
+      ...value,
+      reference,
+      source: "kint-corporate-website",
+      submittedAt: new Date().toISOString(),
     });
-    if (!delivered.ok) throw new Error("receiver");
     return respond(
       {
-        message:
-          "Your enquiry has been received. Thank you for contacting KINT.",
+        message: `Your enquiry has been accepted for processing. Reference: ${reference}.`,
+        reference,
       },
       200,
     );

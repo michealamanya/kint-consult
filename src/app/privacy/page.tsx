@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       <PageIntro
         label="Privacy"
         title="A clear approach to your information."
-        description="This notice describes the website’s enquiry workflow. It will be updated when live contact delivery is configured."
+        description="How KINT Consult Limited uses information from this corporate website."
         crumbs={[{ label: "Privacy", href: "/privacy" }]}
       />
       <section className="content-section">
@@ -28,16 +28,17 @@ export default function PrivacyPage() {
             </p>
             <h2>When live delivery is available</h2>
             <p>
-              A submitted enquiry includes your name, email address,
-              organisation if supplied, area of interest, message, privacy
-              acknowledgement and submission time. KINT uses this information to
-              assess and respond to the enquiry.
+              A submitted enquiry includes your name, email address, optional
+              phone number, organisation if supplied, area of interest, message,
+              privacy acknowledgement, submission reference and submission time.
+              KINT uses this information to assess and respond to the enquiry.
             </p>
             <p>
-              Live delivery requires a configured receiver and spam protection.
-              The receiver’s provider, retention period and relevant contact
-              details must be confirmed in this notice before that workflow is
-              launched.
+              Enquiries are routed to KINT administration. When Microsoft 365
+              delivery is enabled, Microsoft processes the message for KINT. An
+              alternative delivery provider may be used only after this notice
+              is updated to identify it. Access is limited to people handling
+              the enquiry and relevant service providers.
             </p>
             <h2>Spam protection</h2>
             <p>
@@ -55,11 +56,40 @@ export default function PrivacyPage() {
             </p>
             <h2>Website operation</h2>
             <p>
-              This implementation includes no advertising trackers or analytics
-              scripts. Hosting infrastructure may process technical request
-              information needed to serve and secure the website. The deployment
-              operator should confirm any server logging and retention
-              arrangements before public launch.
+              Hosting and security infrastructure may process IP addresses,
+              request times and technical details to serve the website, diagnose
+              faults and prevent abuse. Please do not include confidential
+              project information in enquiry messages.
+            </p>
+            <h2>Retention and your choices</h2>
+            <p>
+              We keep enquiry information for as long as needed to respond,
+              manage any resulting business relationship and meet applicable
+              record-keeping obligations. You can ask us about retention for
+              your enquiry or request access, correction or deletion. Some
+              records may need to be retained to meet legal obligations.
+            </p>
+            <h2>Optional audience measurement</h2>
+            <p>
+              When configured, Plausible Analytics measures page views and
+              accepted enquiries only after you allow measurement through the{" "}
+              <a href="/cookies">cookie preferences page</a>. We do not send
+              names, email addresses, phone numbers or message contents as
+              analytics event properties. You can withdraw permission there at
+              any time. Measurement is disabled by default.
+            </p>
+            <h2>Careers and partnerships</h2>
+            <p>
+              We use introductions to assess the enquiry and contact you about
+              it. We do not automatically enrol you in marketing or promise to
+              keep your details for future roles. We will explain any additional
+              information we request.
+            </p>
+            <h2>Service providers and questions</h2>
+            <p>
+              Some service providers may process information outside Uganda.
+              Contact KINT to ask about the providers and safeguards relevant to
+              your enquiry, or to raise a concern about information handling.
             </p>
             <h2>Questions about your information</h2>
             <p>

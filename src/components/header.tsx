@@ -4,12 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { navigation } from "@/data/site";
+import { navigation, companyNavigation } from "@/data/site";
 import { Arrow } from "./ui";
 
 export function Wordmark() {
   return (
-    <Link href="/" className="wordmark" aria-label="KINT Consult Home">
+    <Link href="/" className="wordmark" aria-label="KINT Consult Limited home">
       <Image
         src="/images/kint-logo.jpg"
         alt="KINT"
@@ -25,21 +25,50 @@ export function Wordmark() {
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLButtonElement>(null);
+  const [overHero, setOverHero] = useState(pathname === "/");
   const toggleRef = useRef<HTMLButtonElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   useEffect(() => {
     setOpen(false);
+    setMoreOpen(false);
+    const hero = pathname === "/" ? document.querySelector(".hero") : null;
+    if (!hero) {
+      setOverHero(false);
+      return;
+    }
+    const update = () =>
+      setOverHero(
+        hero.getBoundingClientRect().bottom >
+          (headerRef.current?.offsetHeight ?? 128),
+      );
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, [pathname]);
   useEffect(() => {
-    if (!open) return;
+    if (!open && !moreOpen) return;
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setOpen(false);
-        toggleRef.current?.focus();
+        if (moreOpen) {
+          setMoreOpen(false);
+          moreRef.current?.focus();
+        } else {
+          setOpen(false);
+          toggleRef.current?.focus();
+        }
       }
     }
     function outside(event: PointerEvent) {
-      if (!headerRef.current?.contains(event.target as Node)) setOpen(false);
+      if (!headerRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+        setMoreOpen(false);
+      }
     }
     window.addEventListener("keydown", onKey);
     window.addEventListener("pointerdown", outside);
@@ -47,9 +76,9 @@ export function Header() {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("pointerdown", outside);
     };
-  }, [open]);
+  }, [open, moreOpen]);
   return (
-    <header className="site-header" ref={headerRef}>
+    <header className="site-header" data-over-hero={overHero} ref={headerRef}>
       <div className="container header-inner">
         <Wordmark />
         <nav
@@ -67,12 +96,59 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <div
+            className="header-more"
+            onBlur={(event) => {
+              if (
+                !event.currentTarget.contains(
+                  event.relatedTarget as Node | null,
+                )
+              )
+                setMoreOpen(false);
+            }}
+          >
+            <button
+              ref={moreRef}
+              type="button"
+              className="header-more-toggle"
+              aria-expanded={moreOpen}
+              aria-controls="company-navigation"
+              data-active={companyNavigation.some((item) =>
+                pathname.startsWith(item.href),
+              )}
+              onClick={() => setMoreOpen(!moreOpen)}
+            >
+              More <span aria-hidden="true">⌄</span>
+            </button>
+            <div
+              className="header-more-links"
+              id="company-navigation"
+              hidden={!moreOpen}
+            >
+              {companyNavigation.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={
+                    pathname.startsWith(item.href) ? "page" : undefined
+                  }
+                  onClick={() => {
+                    setMoreOpen(false);
+                    setOpen(false);
+                  }}
+                >
+                  {item.label}
+                  <Arrow diagonal />
+                </Link>
+              ))}
+            </div>
+          </div>
           <Link
             href="/contact"
             className="header-contact"
             onClick={() => setOpen(false)}
           >
-            Work with us
+            Contact
             <Arrow diagonal />
           </Link>
         </nav>
@@ -82,7 +158,10 @@ export function Header() {
           ref={toggleRef}
           aria-controls="main-navigation"
           aria-expanded={open}
-          onClick={() => setOpen(!open)}
+          onClick={() => {
+            setOpen(!open);
+            setMoreOpen(false);
+          }}
         >
           {open ? "Close" : "Menu"}
           <span

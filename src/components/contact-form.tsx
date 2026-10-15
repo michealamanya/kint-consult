@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { enquiryAreas } from "@/data/site";
 import { validateEnquiry } from "@/lib/contact-validation.mjs";
 import { Arrow } from "./ui";
+import { trackEnquiryAccepted } from "./analytics";
 
 declare global {
   interface Window {
@@ -65,11 +66,12 @@ export function ContactForm({
   function saveDraft(value: {
     name: string;
     email: string;
+    phone?: string;
     organisation: string;
     area: string;
     message: string;
   }) {
-    const text = `KINT Consult — Enquiry draft\n\nName: ${value.name}\nEmail: ${value.email}\nOrganisation: ${value.organisation || "Not supplied"}\nArea: ${value.area}\n\n${value.message}\n\nThis draft has not been sent to KINT.`;
+    const text = `KINT Consult — Enquiry draft\n\nName: ${value.name}\nEmail: ${value.email}\nPhone: ${value.phone || "Not supplied"}\nOrganisation: ${value.organisation || "Not supplied"}\nArea: ${value.area}\n\n${value.message}\n\nThis draft has not been sent to KINT.`;
     const url = URL.createObjectURL(
       new Blob([text], { type: "text/plain;charset=utf-8" }),
     );
@@ -115,7 +117,7 @@ export function ContactForm({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(input),
-        signal: AbortSignal.timeout(25000),
+        signal: AbortSignal.timeout(40000),
       });
       const result = await response.json();
       if (!response.ok) {
@@ -123,6 +125,7 @@ export function ContactForm({
         throw new Error(result.error || "The enquiry could not be delivered.");
       }
       setMessage(result.message);
+      trackEnquiryAccepted();
       formRef.current?.reset();
     } catch (error) {
       setFailed(true);
@@ -181,6 +184,18 @@ export function ContactForm({
             {...errorProps("email")}
           />
           {fieldError("email")}
+        </div>
+        <div className="form-field full">
+          <label htmlFor="phone">Phone number (optional)</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            maxLength={30}
+            {...errorProps("phone")}
+          />
+          {fieldError("phone")}
         </div>
         <div className="form-field full">
           <label htmlFor="organisation">Organisation</label>
@@ -281,6 +296,7 @@ export function ContactForm({
               saveDraft({
                 name: String(data.get("name") || ""),
                 email: String(data.get("email") || ""),
+                phone: String(data.get("phone") || ""),
                 organisation: String(data.get("organisation") || ""),
                 area: String(data.get("area") || ""),
                 message: String(data.get("message") || ""),

@@ -1,11 +1,18 @@
 import "server-only";
+import { graphReady } from "./mail-delivery.mjs";
 
 export function contactDeliveryReady() {
   try {
-    const url = new URL(process.env.CONTACT_WEBHOOK_URL || "");
+    const url = new URL(
+      process.env.CONTACT_WEBHOOK_URL || "https://unconfigured.invalid",
+    );
     return (
-      url.protocol === "https:" &&
-      Boolean(process.env.CONTACT_WEBHOOK_TOKEN) &&
+      (graphReady() ||
+        (url.protocol === "https:" &&
+          Boolean(
+            process.env.CONTACT_WEBHOOK_TOKEN &&
+            process.env.CONTACT_WEBHOOK_URL,
+          ))) &&
       (process.env.NODE_ENV !== "production" ||
         Boolean(
           process.env.TURNSTILE_SECRET_KEY &&

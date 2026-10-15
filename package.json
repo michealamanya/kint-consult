@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "node scripts/start.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/contact-validation.test.mjs",
+    "test": "node --test tests/contact-validation.test.mjs tests/content-filter.test.mjs tests/mail-delivery.test.mjs",
+    "content:check": "node scripts/check-content.mjs",
     "test:browser": "playwright test"
   },
   "dependencies": {

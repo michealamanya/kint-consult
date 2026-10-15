@@ -44,6 +44,12 @@ export default async function ContactPage({
               </a>
             )}
             {company.address && <p>{company.address}</p>}
+            {company.hours && <p>Office hours: {company.hours}</p>}
+            {company.responseTime && <p>{company.responseTime}</p>}
+            <p>
+              Enquiries are handled by KINT administration. Calls and meetings
+              can be arranged by email.
+            </p>
             <p className="aside-note">
               KINT Intelligence products are under development. Enquiries about
               this area are discussions of research needs and potential

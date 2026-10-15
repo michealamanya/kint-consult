@@ -143,7 +143,7 @@ export function ContactCta() {
             We’ll explore how technology and data can help.
           </p>
           <Button href="/contact" variant="light">
-            Work with us
+            Discuss your project
           </Button>
           <div className="cta-contact-links" aria-label="Direct contact">
             <a href={`mailto:${company.email}`}>{company.email}</a>

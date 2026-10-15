@@ -13,9 +13,10 @@ import { pageMetadata, pageSchema } from "@/lib/seo";
 
 export const metadata = pageMetadata(
   "Industrial Intelligence & Digital Transformation",
-  "KINT Consult combines enterprise systems, Odoo, AI and data solutions with a developing industrial intelligence direction for Uganda and Africa.",
+  "KINT Consult brings industrial advisory, market research, business readiness and digital solutions to Uganda and the wider African economy.",
   "/",
 );
+export const revalidate = 60;
 export default function Home() {
   return (
     <>

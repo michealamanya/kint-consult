@@ -57,3 +57,11 @@ test("enforces field size limits", () => {
   for (const key of ["name", "organisation", "message"])
     assert.ok(result.errors[key]);
 });
+test("accepts optional phone numbers and rejects malformed or injected numbers", () => {
+  assert.equal(
+    validateEnquiry({ ...valid, phone: "+256 740 470116" }, areas).value.phone,
+    "+256 740 470116",
+  );
+  for (const phone of ["call me", "0740\r\nInjected", "1".repeat(31)])
+    assert.ok(validateEnquiry({ ...valid, phone }, areas).errors.phone);
+});

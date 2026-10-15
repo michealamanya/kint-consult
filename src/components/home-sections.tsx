@@ -4,10 +4,12 @@ import { Arrow, Button, Container, Eyebrow } from "./ui";
 import { DataFlow } from "./data-flow";
 import { InsightList } from "./insight-list";
 import { BrandVisual, ConnectionVisual } from "./brand-visual";
+import { NeuralBackground } from "./neural-background";
 
 export function Hero() {
   return (
     <section className="hero">
+      <NeuralBackground />
       <Container>
         <div className="hero-layout">
           <div className="hero-copy">
@@ -19,8 +21,8 @@ export function Hero() {
             <p>Connected systems. Clearer data. Better industrial decisions.</p>
             <div className="hero-actions">
               <Button href="#what-we-do">Explore KINT</Button>
-              <Link href="/contact" className="text-link">
-                Work with us
+              <Link href="/contact" className="button hero-contact-button">
+                Let’s talk
                 <Arrow diagonal />
               </Link>
             </div>
@@ -28,9 +30,15 @@ export function Hero() {
               className="hero-specialisms"
               aria-label="Explore current solutions"
             >
-              <Link href="/solutions/erp-odoo">ERP Systems</Link>
-              <Link href="/solutions/ai-data">AI & data</Link>
-              <Link href="/solutions/cloud-infrastructure">Cloud systems</Link>
+              <Link href="/solutions/business-advisory">
+                Advisory <Arrow diagonal />
+              </Link>
+              <Link href="/solutions/market-opportunity">
+                Market intelligence <Arrow diagonal />
+              </Link>
+              <Link href="/partners">
+                Partner with KINT <Arrow diagonal />
+              </Link>
             </nav>
             <div className="hero-footnote">
               <span className="small-cross" aria-hidden="true">
@@ -62,11 +70,20 @@ export function Positioning() {
               <em>digital capability.</em>
             </h2>
             <p className="positioning-summary">
-              We bring your systems and information together.
+              We connect industrial understanding, practical research and
+              digital capability.
             </p>
+            <ul className="positioning-reasons">
+              <li>Questions grounded in your business.</li>
+              <li>Research with traceable sources.</li>
+              <li>Scope and outcomes agreed before delivery.</li>
+            </ul>
             <Link href="/about" className="text-link">
               Meet KINT
               <Arrow diagonal />
+            </Link>
+            <Link href="/projects" className="text-link">
+              Our project approach <Arrow diagonal />
             </Link>
           </div>
           <ConnectionVisual />
@@ -148,7 +165,9 @@ export function SolutionsSection() {
               <br />
               <em>better operations.</em>
             </h2>
-            <p>Technology that fits the way you work.</p>
+            <p>
+              Research, advisory and technology that move your business forward.
+            </p>
             <Button href="/solutions" variant="secondary">
               Explore our solutions
             </Button>
@@ -163,7 +182,9 @@ export function SolutionsSection() {
           </div>
           <div className="solution-index">
             {solutions
-              .filter((item) => item.slug !== "industrial-intelligence")
+              .filter(
+                (item) => item.featured || item.slug === "software-platforms",
+              )
               .map((item) => (
                 <Link
                   href={`/solutions/${item.slug}`}

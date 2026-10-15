@@ -1,0 +1,215 @@
+{
+  "entries": [
+    {
+      "slug": "business-advisory",
+      "title": "Business & industrial advisory",
+      "label": "A01",
+      "description": "Define the next step with a clear commercial and operational plan.",
+      "intro": "We review objectives, stakeholders and operating constraints, then agree a practical roadmap.",
+      "featured": true,
+      "problem": "Unclear priorities can delay investment and implementation.",
+      "response": "We review objectives, stakeholders and operating constraints, then agree a practical roadmap.",
+      "outcome": "A prioritised action plan with responsibilities, assumptions and decision points.",
+      "priorities": [
+        "Business discovery and strategy",
+        "Operating model and process review",
+        "Implementation roadmaps",
+        "Stakeholder engagement"
+      ]
+    },
+    {
+      "slug": "market-opportunity",
+      "title": "Market & opportunity intelligence",
+      "label": "A02",
+      "description": "Evidence to understand a market and identify relevant opportunities.",
+      "intro": "We organise desk research around a defined question and document sources, limitations and commercial context.",
+      "featured": true,
+      "problem": "Market information is fragmented and opportunities are difficult to compare.",
+      "response": "We organise desk research around a defined question and document sources, limitations and commercial context.",
+      "outcome": "A focused research brief and an opportunity shortlist for further due diligence.",
+      "priorities": [
+        "Sector and market research",
+        "Opportunity mapping",
+        "Competitor and value-chain analysis",
+        "Source verification and research briefs"
+      ]
+    },
+    {
+      "slug": "supplier-investor-readiness",
+      "title": "Supplier & investor readiness",
+      "label": "A03",
+      "description": "Prepare your business for procurement and investment conversations.",
+      "intro": "We assess readiness, identify evidence gaps and support the preparation of business and capability materials.",
+      "featured": true,
+      "problem": "A capable business may lack the records and presentation needed for assessment.",
+      "response": "We assess readiness, identify evidence gaps and support the preparation of business and capability materials.",
+      "outcome": "A readiness checklist and a clearer evidence pack; procurement awards and funding are not guaranteed.",
+      "priorities": [
+        "Supplier capability profiles",
+        "Readiness assessments",
+        "Business and investor materials",
+        "Action plans and evidence organisation"
+      ]
+    },
+    {
+      "slug": "local-content-compliance",
+      "title": "Local content & compliance support",
+      "label": "A04",
+      "description": "Organise the requirements and evidence relevant to your participation.",
+      "intro": "We help map applicable official sources, document obligations and organise evidence with your qualified advisers.",
+      "featured": true,
+      "problem": "Changing requirements and incomplete records can slow supplier participation.",
+      "response": "We help map applicable official sources, document obligations and organise evidence with your qualified advisers.",
+      "outcome": "A traceable requirements register and a practical compliance action plan; legal opinions require qualified counsel.",
+      "priorities": [
+        "Local content readiness",
+        "Requirements and evidence registers",
+        "Document preparation support",
+        "Compliance workflow design"
+      ]
+    },
+    {
+      "slug": "feasibility-research",
+      "title": "Feasibility & research",
+      "label": "A05",
+      "description": "Test an idea before committing resources.",
+      "intro": "We scope research, document assumptions and compare options with proportionate analysis.",
+      "featured": true,
+      "problem": "An opportunity needs evidence of demand, delivery constraints and commercial viability.",
+      "response": "We scope research, document assumptions and compare options with proportionate analysis.",
+      "outcome": "A decision brief identifying options, risks, evidence gaps and recommended next steps.",
+      "priorities": [
+        "Pre-feasibility scoping",
+        "Desk and field research planning",
+        "Options and risk assessment",
+        "Decision briefs and reporting"
+      ]
+    },
+    {
+      "slug": "data-registry",
+      "title": "Data & registry services",
+      "label": "A06",
+      "description": "Organised information that your team can maintain and use.",
+      "intro": "We define a data model, clean agreed sources and design controlled collection and update workflows.",
+      "featured": true,
+      "problem": "Disconnected spreadsheets and inconsistent records make research and coordination harder.",
+      "response": "We define a data model, clean agreed sources and design controlled collection and update workflows.",
+      "outcome": "A structured dataset and documented ownership, quality checks and maintenance process.",
+      "priorities": [
+        "Data collection and cleaning",
+        "Registry design and data models",
+        "Quality and source documentation",
+        "Controlled access and update workflows"
+      ]
+    },
+    {
+      "slug": "ai-data",
+      "title": "AI & data solutions",
+      "label": "01",
+      "description": "Turn fragmented information into a usable foundation for analysis and responsible AI.",
+      "intro": "Useful AI starts with well-understood data and a clearly defined business problem. We help organisations structure information, improve reporting and identify where AI can support practical workflows.",
+      "priorities": [
+        "Data preparation, modelling and integration",
+        "Business analytics and decision-support reporting",
+        "AI use-case assessment and scoped prototypes",
+        "Evaluation, human oversight and data governance"
+      ],
+      "problem": "Fragmented data and unclear AI use cases make useful analysis difficult.",
+      "outcome": "A scoped data and AI plan, with agreed quality checks, evaluation and human oversight.",
+      "response": "Useful AI starts with well-understood data and a clearly defined business problem. We help organisations structure information, improve reporting and identify where AI can support practical workflows."
+    },
+    {
+      "slug": "erp-odoo",
+      "title": "ERP & Odoo",
+      "label": "02",
+      "description": "Connected business systems, built around the way your organisation operates.",
+      "intro": "KINT’s ERP and Odoo work starts with the business process: how information moves, where control is needed and which teams depend on each other. Implementation is planned around scope, data quality and adoption.",
+      "priorities": [
+        "Business-process discovery and implementation planning",
+        "Odoo configuration and workflow integration",
+        "Data migration and reporting requirements",
+        "User training and ongoing system support"
+      ],
+      "problem": "Separate business tools and inconsistent records create duplicate work and weak visibility.",
+      "outcome": "An agreed implementation scope, connected workflows and a tested migration and adoption plan.",
+      "response": "KINT’s ERP and Odoo work starts with the business process: how information moves, where control is needed and which teams depend on each other. Implementation is planned around scope, data quality and adoption."
+    },
+    {
+      "slug": "software-platforms",
+      "title": "Software & digital platforms",
+      "label": "03",
+      "description": "Purpose-built software and corporate platforms for real operational needs.",
+      "intro": "From enterprise websites to internal tools, custom software should fit the work it supports. We plan, design and build maintainable platforms with clear requirements and sensible integration boundaries.",
+      "priorities": [
+        "Corporate and industrial web platforms",
+        "Custom business applications and portals",
+        "System and API integrations",
+        "Maintainability, accessibility and performance"
+      ],
+      "problem": "Generic tools and disconnected websites can leave important business needs unmet.",
+      "outcome": "A maintainable, accessible platform with agreed functionality, integrations and handover documentation.",
+      "response": "From enterprise websites to internal tools, custom software should fit the work it supports. We plan, design and build maintainable platforms with clear requirements and sensible integration boundaries."
+    },
+    {
+      "slug": "cloud-infrastructure",
+      "title": "Cloud & infrastructure",
+      "label": "04",
+      "description": "Dependable digital foundations for business systems and teams.",
+      "intro": "Reliable infrastructure supports everything above it. KINT helps plan and implement cloud and server environments, alongside Microsoft 365 and digital workplace systems that help teams work consistently.",
+      "priorities": [
+        "Cloud and server environment planning",
+        "Microsoft 365 and digital workplace setup",
+        "Backup, recovery and access configuration",
+        "Monitoring and infrastructure documentation"
+      ],
+      "problem": "Unclear infrastructure ownership and recovery arrangements put business continuity at risk.",
+      "outcome": "A documented environment with agreed access, recovery, monitoring and support arrangements.",
+      "response": "Reliable infrastructure supports everything above it. KINT helps plan and implement cloud and server environments, alongside Microsoft 365 and digital workplace systems that help teams work consistently."
+    },
+    {
+      "slug": "automation-reporting",
+      "title": "Automation & reporting",
+      "label": "05",
+      "description": "Reduce manual handoffs. Make operational information easier to use.",
+      "intro": "Repeated manual tasks can hide errors and slow down decisions. We examine the workflow first, then connect systems and design reporting that makes responsibilities, exceptions and outcomes visible.",
+      "priorities": [
+        "Workflow discovery and process mapping",
+        "Business process automation and integrations",
+        "Management dashboards and scheduled reporting",
+        "Exception handling and operational controls"
+      ],
+      "problem": "Manual handoffs and inconsistent reporting delay action and increase errors.",
+      "outcome": "Connected workflows and decision-relevant reporting with clear ownership and exception handling.",
+      "response": "Repeated manual tasks can hide errors and slow down decisions. We examine the workflow first, then connect systems and design reporting that makes responsibilities, exceptions and outcomes visible."
+    },
+    {
+      "slug": "cybersecurity-governance",
+      "title": "Cybersecurity & data governance",
+      "label": "06",
+      "description": "Build better control over access, information and digital risk.",
+      "intro": "Security and information governance belong in the design of business systems. KINT’s approach focuses on practical access controls, information handling and documented responsibilities within implementation engagements.",
+      "priorities": [
+        "Access and identity configuration",
+        "Information classification and handling",
+        "Backup and recovery planning",
+        "Governance requirements and implementation controls"
+      ],
+      "problem": "Inconsistent access and information handling expose avoidable operational risks.",
+      "outcome": "Documented access and handling controls, with responsibilities and recovery requirements agreed for the engagement.",
+      "response": "Security and information governance belong in the design of business systems. KINT’s approach focuses on practical access controls, information handling and documented responsibilities within implementation engagements."
+    },
+    {
+      "slug": "industrial-intelligence",
+      "title": "Industrial intelligence",
+      "label": "07 / In development",
+      "description": "A developing product direction for connected industrial information.",
+      "intro": "KINT Intelligence is our longer-term development programme. We are exploring how structured industrial datasets, knowledge relationships and AI-assisted research can make company, project and market information easier to understand. These products are not yet commercially available.",
+      "priorities": [
+        "Structured company and supplier datasets",
+        "Project, tender and opportunity information",
+        "Market, commodity and regulatory research",
+        "Search, knowledge graphs and AI-assisted analysis"
+      ]
+    }
+  ]
+}

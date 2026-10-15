@@ -1,12 +1,15 @@
+import serviceContent from "../../content/services.json";
 export const company = {
   name: "KINT Consult Limited",
   shortName: "KINT",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://kintconsult.com",
   description:
-    "Enterprise technology, data solutions and developing industrial intelligence capabilities for Uganda and the wider African industrial economy.",
+    "Industrial advisory, market research and digital solutions for Uganda and the wider African industrial economy.",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "admin@kintconsult.com",
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "0740470116",
   address: process.env.NEXT_PUBLIC_CONTACT_ADDRESS || null,
+  hours: process.env.NEXT_PUBLIC_CONTACT_HOURS || null,
+  responseTime: process.env.NEXT_PUBLIC_RESPONSE_TIME || null,
   // TODO: verified registered address, registration number, leadership and social URLs.
   socialLinks: [] as { label: string; url: string }[],
   platformUrl: null as string | null,
@@ -20,6 +23,12 @@ export const navigation = [
   { label: "Insights", href: "/insights" },
 ];
 
+export const companyNavigation = [
+  { label: "Projects", href: "/projects" },
+  { label: "Partners", href: "/partners" },
+  { label: "Careers", href: "/careers" },
+];
+
 export type Topic = {
   slug: string;
   title: string;
@@ -28,6 +37,10 @@ export type Topic = {
   description: string;
   intro: string;
   priorities: string[];
+  featured?: boolean;
+  problem?: string;
+  response?: string;
+  outcome?: string;
 };
 
 export const industries: Topic[] = [
@@ -94,113 +107,7 @@ export const industries: Topic[] = [
   },
 ];
 
-export const solutions: Topic[] = [
-  {
-    slug: "ai-data",
-    title: "AI & data solutions",
-    label: "01",
-    description:
-      "Turn fragmented information into a usable foundation for analysis and responsible AI.",
-    intro:
-      "Useful AI starts with well-understood data and a clearly defined business problem. We help organisations structure information, improve reporting and identify where AI can support practical workflows.",
-    priorities: [
-      "Data preparation, modelling and integration",
-      "Business analytics and decision-support reporting",
-      "AI use-case assessment and scoped prototypes",
-      "Evaluation, human oversight and data governance",
-    ],
-  },
-  {
-    slug: "erp-odoo",
-    title: "ERP & Odoo",
-    label: "02",
-    description:
-      "Connected business systems, built around the way your organisation operates.",
-    intro:
-      "KINT’s ERP and Odoo work starts with the business process: how information moves, where control is needed and which teams depend on each other. Implementation is planned around scope, data quality and adoption.",
-    priorities: [
-      "Business-process discovery and implementation planning",
-      "Odoo configuration and workflow integration",
-      "Data migration and reporting requirements",
-      "User training and ongoing system support",
-    ],
-  },
-  {
-    slug: "software-platforms",
-    title: "Software & digital platforms",
-    label: "03",
-    description:
-      "Purpose-built software and corporate platforms for real operational needs.",
-    intro:
-      "From enterprise websites to internal tools, custom software should fit the work it supports. We plan, design and build maintainable platforms with clear requirements and sensible integration boundaries.",
-    priorities: [
-      "Corporate and industrial web platforms",
-      "Custom business applications and portals",
-      "System and API integrations",
-      "Maintainability, accessibility and performance",
-    ],
-  },
-  {
-    slug: "cloud-infrastructure",
-    title: "Cloud & infrastructure",
-    label: "04",
-    description:
-      "Dependable digital foundations for business systems and teams.",
-    intro:
-      "Reliable infrastructure supports everything above it. KINT helps plan and implement cloud and server environments, alongside Microsoft 365 and digital workplace systems that help teams work consistently.",
-    priorities: [
-      "Cloud and server environment planning",
-      "Microsoft 365 and digital workplace setup",
-      "Backup, recovery and access configuration",
-      "Monitoring and infrastructure documentation",
-    ],
-  },
-  {
-    slug: "automation-reporting",
-    title: "Automation & reporting",
-    label: "05",
-    description:
-      "Reduce manual handoffs. Make operational information easier to use.",
-    intro:
-      "Repeated manual tasks can hide errors and slow down decisions. We examine the workflow first, then connect systems and design reporting that makes responsibilities, exceptions and outcomes visible.",
-    priorities: [
-      "Workflow discovery and process mapping",
-      "Business process automation and integrations",
-      "Management dashboards and scheduled reporting",
-      "Exception handling and operational controls",
-    ],
-  },
-  {
-    slug: "cybersecurity-governance",
-    title: "Cybersecurity & data governance",
-    label: "06",
-    description:
-      "Build better control over access, information and digital risk.",
-    intro:
-      "Security and information governance belong in the design of business systems. KINT’s approach focuses on practical access controls, information handling and documented responsibilities within implementation engagements.",
-    priorities: [
-      "Access and identity configuration",
-      "Information classification and handling",
-      "Backup and recovery planning",
-      "Governance requirements and implementation controls",
-    ],
-  },
-  {
-    slug: "industrial-intelligence",
-    title: "Industrial intelligence",
-    label: "07 / In development",
-    description:
-      "A developing product direction for connected industrial information.",
-    intro:
-      "KINT Intelligence is our longer-term development programme. We are exploring how structured industrial datasets, knowledge relationships and AI-assisted research can make company, project and market information easier to understand. These products are not yet commercially available.",
-    priorities: [
-      "Structured company and supplier datasets",
-      "Project, tender and opportunity information",
-      "Market, commodity and regulatory research",
-      "Search, knowledge graphs and AI-assisted analysis",
-    ],
-  },
-];
+export const solutions: Topic[] = serviceContent.entries;
 
 export const intelligenceAreas = [
   {
@@ -266,6 +173,14 @@ export const intelligenceAreas = [
 ];
 
 export const enquiryAreas = [
+  "Business & industrial advisory",
+  "Market & opportunity intelligence",
+  "Supplier & investor readiness",
+  "Local content & compliance support",
+  "Feasibility & research",
+  "Data & registry services",
+  "Partnership",
+  "Careers / expression of interest",
   "Digital transformation",
   "ERP / Odoo",
   "AI & data",

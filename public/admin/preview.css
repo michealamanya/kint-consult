@@ -1,0 +1,16 @@
+body {
+  font: 18px/1.7 system-ui;
+  background: #f6f2e9;
+  color: #29251f;
+  padding: 24px;
+}
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  color: #735014;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}

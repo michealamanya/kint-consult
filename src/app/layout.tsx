@@ -6,7 +6,9 @@ import "./clay.css";
 import "./typography.css";
 import "./visuals.css";
 import "./responsive.css";
+import "./hero-motion.css";
 import { Header } from "@/components/header";
+import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/ui";
 import { company } from "@/data/site";
@@ -20,7 +22,11 @@ export const metadata: Metadata = {
   description: company.description,
   applicationName: "KINT Consult",
   // Next.js generates icon metadata from icon.tsx and apple-icon.tsx.
-  robots: { index: true, follow: true },
+  robots: {
+    index: process.env.SITE_ENV !== "staging",
+    follow: process.env.SITE_ENV !== "staging",
+  },
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION || undefined },
 };
 export default function RootLayout({
   children,
@@ -34,6 +40,7 @@ export default function RootLayout({
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        <Analytics />
         <JsonLd
           data={{
             "@context": "https://schema.org",

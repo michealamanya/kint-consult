@@ -26,10 +26,10 @@
     inset 0 1px 0 #ffffffc9, 0 2px 4px #25221c04, 0 10px 24px #25221c09;
   --shadow-control:
     inset 0 1px 0 #ffffffb3, 0 2px 3px #25221c08, 0 5px 10px #25221c08;
-  --space-section: 64px;
-  --space-section-compact: 48px;
-  --space-heading: 32px;
-  --space-column: 56px;
+  --space-section: 56px;
+  --space-section-compact: 36px;
+  --space-heading: 24px;
+  --space-column: 40px;
   --space-gutter: clamp(20px, 4vw, 56px);
 }
 * {

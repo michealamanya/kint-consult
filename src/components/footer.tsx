@@ -71,7 +71,12 @@ export function Footer() {
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} KINT Consult Limited</p>
           <span>Industrial intelligence. Digital transformation.</span>
-          <Link href="/privacy">Privacy notice</Link>
+          <nav aria-label="Legal information" className="legal-links">
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/cookies">Cookies</Link>
+            <Link href="/terms">Terms</Link>
+            <Link href="/accessibility">Accessibility</Link>
+          </nav>
         </div>
       </Container>
     </footer>

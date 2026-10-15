@@ -11,7 +11,7 @@ import {
 } from "@/components/ui";
 import { pageMetadata, pageSchema } from "@/lib/seo";
 const description =
-  "ERP and Odoo, AI and data, custom software, cloud infrastructure, automation and information governance for business and industrial organisations.";
+  "Business advisory, market intelligence, supplier readiness, local content support, research, data services and digital platforms.";
 const serviceVisuals: Record<string, VisualKind> = {
   "ai-data": "ai",
   "erp-odoo": "odoo",
@@ -21,7 +21,7 @@ const serviceVisuals: Record<string, VisualKind> = {
   "cybersecurity-governance": "security",
 };
 export const metadata = pageMetadata(
-  "Enterprise Technology Solutions",
+  "Advisory & Digital Solutions",
   description,
   "/solutions",
 );
@@ -30,7 +30,7 @@ export default function SolutionsPage() {
     <>
       <PageIntro
         label="Solutions / Current services"
-        title="Digital systems with a clear business purpose."
+        title="Advisory, intelligence and digital capability."
         description={description}
         crumbs={[{ label: "Solutions", href: "/solutions" }]}
       />
@@ -45,7 +45,9 @@ export default function SolutionsPage() {
                 key={item.slug}
               >
                 <span>{item.label} / CURRENT SERVICE</span>
-                <BrandVisual kind={serviceVisuals[item.slug]} />
+                <BrandVisual
+                  kind={serviceVisuals[item.slug] || "intelligence"}
+                />
                 <h2>{item.title}</h2>
                 <p>{item.description}</p>
                 <Arrow diagonal />

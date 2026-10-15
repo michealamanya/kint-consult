@@ -12,6 +12,42 @@ body {
   font-weight: 450;
   line-height: 1.7;
 }
+
+/* A stronger scale for the homepage, without changing article or form text. */
+main:has(> .hero) {
+  --type-body: clamp(1.25rem, 1rem + 0.3vw, 1.75rem);
+  --type-ui: clamp(1rem, 0.95rem + 0.15vw, 1.25rem);
+  --type-label: clamp(0.9375rem, 0.8rem + 0.2vw, 1.25rem);
+  --type-card-title: clamp(1.75rem, 1.2rem + 0.7vw, 2.75rem);
+  font-size: var(--type-body);
+}
+main:has(> .hero) .hero h1 {
+  font-size: clamp(2.5rem, 4.8vw, 7.75rem);
+  line-height: 1.1;
+}
+main:has(> .hero) .hero-copy > p:not(.eyebrow) {
+  font-size: clamp(1.25rem, 1rem + 0.5vw, 2rem);
+  max-width: 36ch;
+  line-height: 1.55;
+}
+main:has(> .hero) h2 {
+  font-size: clamp(2rem, 3.4vw, 5.5rem);
+}
+main:has(> .hero) .sector-item h3 {
+  font-size: var(--type-card-title);
+}
+main:has(> .hero) .hero-specialisms > a {
+  font-size: var(--type-ui);
+}
+@media (max-width: 760px) {
+  main:has(> .hero) {
+    --type-body: 1.1875rem;
+    --type-card-title: 1.625rem;
+  }
+  main:has(> .hero) .hero h1 {
+    font-size: clamp(2.25rem, 9.5vw, 3rem);
+  }
+}
 .main-nav,
 .main-nav.is-open,
 .button,

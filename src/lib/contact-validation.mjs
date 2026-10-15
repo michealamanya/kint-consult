@@ -15,6 +15,7 @@ export function validateEnquiry(input, areas) {
   const value = {
     name: text("name"),
     email: text("email"),
+    phone: text("phone"),
     organisation: text("organisation"),
     area: text("area"),
     message: text("message"),
@@ -31,6 +32,8 @@ export function validateEnquiry(input, areas) {
     !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(value.email)
   )
     errors.email = "Enter a valid email address.";
+  if (value.phone && !/^[+()\d .-]{7,30}$/.test(value.phone))
+    errors.phone = "Enter a valid phone number, or leave it blank.";
   if (
     value.organisation.length > 150 ||
     /[\r\n\x00-\x1f]/.test(value.organisation)

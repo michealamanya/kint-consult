@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { insights } from "@/data/insights";
+import { getPublishedInsights } from "@/data/insights";
 import { company } from "@/data/site";
 import {
   Breadcrumbs,
@@ -10,23 +10,45 @@ import {
 } from "@/components/ui";
 import { pageMetadata } from "@/lib/seo";
 export function generateStaticParams() {
-  return insights.map((item) => ({ slug: item.slug }));
+  return getPublishedInsights().map((item) => ({ slug: item.slug }));
 }
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const item = insights.find((item) => item.slug === slug);
+  const item = getPublishedInsights().find((item) => item.slug === slug);
   if (!item) return {};
   const metadata = pageMetadata(
     item.title,
     item.description,
     `/insights/${slug}`,
   );
-  return { ...metadata, openGraph: { ...metadata.openGraph, type: "article" } };
+  const image = item.image?.startsWith("/images/uploads/")
+    ? item.image
+    : "/opengraph-image";
+  return {
+    ...metadata,
+    authors: [{ name: item.author }],
+    keywords: item.tags,
+    openGraph: {
+      ...metadata.openGraph,
+      type: "article",
+      publishedTime: item.publishedAt,
+      modifiedTime: item.updatedAt || item.publishedAt,
+      authors: [item.author],
+      section: item.category,
+      tags: item.tags,
+      images: [{ url: image, alt: item.imageAlt || item.title }],
+    },
+    twitter: {
+      ...metadata.twitter,
+      images: [{ url: image, alt: item.imageAlt || item.title }],
+    },
+  };
 }
 export default async function InsightPage({
   params,
@@ -34,7 +56,7 @@ export default async function InsightPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const item = insights.find((item) => item.slug === slug);
+  const item = getPublishedInsights().find((item) => item.slug === slug);
   if (!item) notFound();
   return (
     <>
@@ -52,8 +74,30 @@ export default async function InsightPage({
               <h1>{item.title}</h1>
               <p className="intro-description">{item.description}</p>
               <p className="article-meta">
-                KINT perspectives · {item.readTime}
+                {item.author} ·{" "}
+                <time dateTime={item.publishedAt}>
+                  {new Date(item.publishedAt).toLocaleDateString("en-GB", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    timeZone: "UTC",
+                  })}
+                </time>{" "}
+                · {item.readTime}
               </p>
+              {item.updatedAt && item.updatedAt !== item.publishedAt && (
+                <p className="article-meta">
+                  Updated{" "}
+                  <time dateTime={item.updatedAt}>
+                    {new Date(item.updatedAt).toLocaleDateString("en-GB", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      timeZone: "UTC",
+                    })}
+                  </time>
+                </p>
+              )}
             </div>
           </Container>
         </header>
@@ -89,7 +133,16 @@ export default async function InsightPage({
           "@context": "https://schema.org",
           "@type": "Article",
           headline: item.title,
+          datePublished: item.publishedAt,
+          dateModified: item.updatedAt || item.publishedAt,
+          keywords: item.tags.join(", "),
           description: item.description,
+          image: new URL(
+            item.image?.startsWith("/images/uploads/")
+              ? item.image
+              : "/opengraph-image",
+            company.url,
+          ).href,
           author: { "@id": `${company.url}/#organization` },
           publisher: { "@id": `${company.url}/#organization` },
           mainEntityOfPage: `${company.url}/insights/${slug}`,
