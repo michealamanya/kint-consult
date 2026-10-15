@@ -37,7 +37,7 @@ jobs:
           mkdir -p .next/standalone/.next
           cp -R .next/static .next/standalone/.next/static
           tar -czf kint-release.tar.gz -C .next/standalone .
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: kint-linux-release-${{ github.sha }}
           path: kint-release.tar.gz
