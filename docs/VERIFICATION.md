@@ -1,5 +1,7 @@
 # Production verification
 
+- Hydration/cache isolation (15 October 2026): the reported diff mixed the old client header labels with current server text; old labels were present in the prior development output. Development now uses `.next-dev/dev` while production remains in `.next`. Updated generated-type includes and cache exclusions. The existing dev server automatically restarted; a production build completed while it remained active, and the dev hydration/navigation/reload regression then passed with no page or hydration errors. The same regression and production homepage/security/accessibility check passed against the standalone runner. No hydration warnings were suppressed. Existing browser tabs may need one hard refresh after switching output directories.
+
 ## Final interface and technical SEO review - 15 October 2026
 
 - Local mobile Lighthouse 12.8.2 audit: performance **88**, accessibility **100**, best practices **100**, SEO **100**. FCP/LCP 1.1 s, total blocking time 400 ms, CLS 0.037 in this run. The initial performance score was 55; moving the static glow to CSS, removing repeated canvas blur and dropping the redundant background photo request improved it while preserving continuous motion and node density. Mobile drawing is capped at 20 fps, desktop at 30 fps. Scores are local simulated-mobile measurements and will vary on the production host; this is not a full accessibility certification. The ignored machine-readable report is `.qa/lighthouse-mobile-final.json`.

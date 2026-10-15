@@ -6,7 +6,7 @@ These instructions assume a Linux server with systemd and Node/npm installed. Th
 
 ## Build and run behind your existing Nginx
 
-1. Upload the repository to `/var/www/kintconsult`, excluding `.git`, `node_modules`, `.next` and local secret files. Build on the Linux server rather than copying Windows dependencies.
+1. Upload the repository to `/var/www/kintconsult`, excluding `.git`, `node_modules`, `.next`, `.next-dev` and local secret files. Build on the Linux server rather than copying Windows dependencies.
 2. Create a dedicated service account if it does not already exist, and grant it ownership of this application directory:
 
    ```sh

@@ -14,6 +14,14 @@ npm run dev
 
 Open http://localhost:3000. On Windows, use `Copy-Item .env.example .env.local` and `npm.cmd` if PowerShell blocks npm scripts.
 
+Development uses `.next-dev/dev`; production uses `.next`. These separate outputs
+let production verification run without replacing the dev server's compiled files.
+After switching from an older cached build, hard-refresh the open tab once
+(`Ctrl+Shift+R`). If the dev server has not restarted after a config change, restart
+`npm run dev`. The hydration regression check can run against development with
+`QA_BASE_URL=http://localhost:3000 npx playwright test tests/browser/hydration.spec.ts`
+(in PowerShell, set `$env:QA_BASE_URL='http://localhost:3000'` first).
+
 ## Validation
 
 ```sh
